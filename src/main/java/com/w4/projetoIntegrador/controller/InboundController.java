@@ -1,15 +1,12 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.InboundDto;
-import com.w4.projetoIntegrador.entities.Batch;
-import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.service.InboundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping("/inboundorder")

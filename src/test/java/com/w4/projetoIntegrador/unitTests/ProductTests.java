@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -33,10 +32,6 @@ public class ProductTests {
     private ProductDto productDto3 = ProductDto.builder().name("product").productType("refrigerado").build();
 
     List<Product> pDtoList = Arrays.asList(product,product2,product3);
-    List<Product> pDtoFrozenList = Arrays.asList(product);
-    List<Product> pDtoFreshList = Arrays.asList(product2);
-    List<Product> pDtoFrigerList = Arrays.asList(product3);
-
 
     private Seller seller = Seller.builder().id(1l).name("seller").build();
 
@@ -88,8 +83,6 @@ public class ProductTests {
 
     List<Batch> batchList = Arrays.asList(batch1, batch2);
 
-    ProductLocationDto productLocationDto = ProductLocationDto.builder().section(section).productId(1L).batchStock(batchList).build();
-
     @Test
     public void deveCadastrarUmProduct() {
 
@@ -103,7 +96,6 @@ public class ProductTests {
         Mockito.when(mockProductRepository.save(Mockito.any())).thenReturn(product);
 
         ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockInboundRepository, mockSectionRepository);
-
 
         //act
         ProductDto p = productService.save(productDto);
@@ -125,7 +117,6 @@ public class ProductTests {
         Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
 
         ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockInboundRepository, mockSectionRepository);
-
 
         //act
         ProductDto p = productService.get(1L);

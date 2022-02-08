@@ -25,12 +25,11 @@ public class AgentDto {
     @NotNull
     private Long sectionId;
 
-    public static AgentDto convert(Agent agent){
+    public static AgentDto convert(Agent agent) {
         return AgentDto.builder().id(agent.getId()).name(agent.getName()).sectionId(agent.getSection().getId()).build();
     }
 
-    public static Agent convert(AgentDto agentDto, Section section){
+    public static Agent convert(AgentDto agentDto, Section section) {
         return Agent.builder().name(agentDto.getName()).section(section).build();
-
     }
 }

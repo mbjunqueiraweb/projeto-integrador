@@ -1,0 +1,716 @@
+{
+	"info": {
+		"_postman_id": "98c7f750-7b70-4412-bd80-43d535b8adeb",
+		"name": "integratorProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requisitos",
+			"item": [
+				{
+					"name": "Requisito 1",
+					"item": [
+						{
+							"name": "New Inbound Order Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF0aGV1cyIsInByb2ZpbGVUeXBlIjoiQUdFTlQiLCJpYXQiOjE2NDQzMjI5MTksImV4cCI6MTY0NDQwOTMxOX0.N7mncD0fEPKiZ-YISijmq09jou4ufSh1RaFlJjC4vpo",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderNumber\": 234,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"sectionId\": 2,\n    \"agentId\": 2,\n    \"batchList\": [\n        {\n            \"initialQuantity\": 52,\n            \"manufacturingDateTime\": \"2023-01-27T15:13:31.253314\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 2,\n            \"productId\": 1\n        },\n        {\n            \"initialQuantity\": 52,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 25.0,\n            \"productId\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Inbound Order Copy",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderNumber\": 1,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"sectionId\": 1,\n    \"agentId\": 1,\n    \"batchList\": [\n        {\n            \"id\": 1,\n            \"initialQuantity\": 420,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253291\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 23.0,\n            \"type\": \"fresco\",\n            \"productId\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"inboundorder",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisito 2",
+					"item": [
+						{
+							"name": "Get Products List",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Products List by Category",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/list?category=refrigerado",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"list"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "refrigerado"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateCart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 2,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"productAnnouncementId\": 2,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateCart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 1,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"id\":1,\n           \"productAnnouncementId\": 1,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cart",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisito 3",
+					"item": [
+						{
+							"name": "Get location product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/loc?id=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"loc"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get location product ordered by Batch number",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/loc?id=1&orderBy=L",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"loc"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										},
+										{
+											"key": "orderBy",
+											"value": "L"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get location product ordered by Batch stock",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/loc?id=1&orderBy=C",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"loc"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										},
+										{
+											"key": "orderBy",
+											"value": "C"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get location product ordered by Due Date",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/loc?id=1&orderBy=F",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"products",
+										"loc"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										},
+										{
+											"key": "orderBy",
+											"value": "F"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisito 4",
+					"item": [
+						{
+							"name": "Get Products by Warehouse",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/warehouses/byproducts/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"warehouses",
+										"byproducts",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisito 5",
+					"item": [
+						{
+							"name": "Get batch list by section",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sections/valid/section/2/days/1000",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sections",
+										"valid",
+										"section",
+										"2",
+										"days",
+										"1000"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get batch list by section and category",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/sections/valid/category/congelado/days/10?orderBy=asc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"sections",
+										"valid",
+										"category",
+										"congelado",
+										"days",
+										"10"
+									],
+									"query": [
+										{
+											"key": "orderBy",
+											"value": "asc"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UsersAuthentication",
+					"item": [
+						{
+							"name": "UserAuthentication",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"Mauro\",\n    \"password\": \"Alkvme*&@!\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/auth",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserAuthentication Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"Matheus\",\n    \"password\": \"AJDUJ*&@!\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/auth",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

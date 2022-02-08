@@ -26,6 +26,7 @@ public class WarehouseController {
     public ResponseEntity<WarehouseDto> newWarehouse(@Valid @RequestBody Warehouse wh) {
         return ResponseEntity.status(201).body(warehouseService.save(wh));
     }
+
     @GetMapping("/byproducts/{id}")
     public ResponseEntity<ProductsByWarehouseDto> getWarehouseByProduct(@PathVariable Long id) {
         return ResponseEntity.ok().body(warehouseService.getWarehouseStock(id));

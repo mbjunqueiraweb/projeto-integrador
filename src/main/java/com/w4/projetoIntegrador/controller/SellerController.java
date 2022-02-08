@@ -1,7 +1,6 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.SellerDto;
-import com.w4.projetoIntegrador.entities.Seller;
 import com.w4.projetoIntegrador.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +12,17 @@ import javax.validation.Valid;
 @RequestMapping("/sellers")
 public class SellerController {
 
-        @Autowired
-        SellerService sellerService;
+    @Autowired
+    SellerService sellerService;
 
-        @GetMapping("/{id}")
-        public ResponseEntity<SellerDto> getSeller(@PathVariable Long id){
-
-            return ResponseEntity.ok().body(sellerService.get(id));
-        }
-
-        @PostMapping()
-        public ResponseEntity<SellerDto> newSeller(@Valid @RequestBody SellerDto s){
-            return ResponseEntity.status(201).body(sellerService.save(s));
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<SellerDto> getSeller(@PathVariable Long id) {
+        return ResponseEntity.ok().body(sellerService.get(id));
     }
+
+    @PostMapping()
+    public ResponseEntity<SellerDto> newSeller(@Valid @RequestBody SellerDto s) {
+        return ResponseEntity.status(201).body(sellerService.save(s));
+    }
+}
 

@@ -42,8 +42,6 @@ public class SectionTest {
         Mockito.when(mockWarehouseService.getWarehouse(Mockito.any())).thenReturn(warehouse);
         Mockito.when(mockSectionRepository.save(Mockito.any())).thenReturn(section);
 
-     
-
         SectionService sectionService = new SectionService(mockSectionRepository,mockWarehouseService);
 
         //act
@@ -79,14 +77,9 @@ public class SectionTest {
 
         List<ValidDueDateProducts>  validDueDateProducts = new ArrayList<>();
 
-
         Mockito.when(mockSectionRepository.findValidDueDateProducts(Mockito.anyLong())).thenReturn(validDueDateProducts);
 
-     
-
         SectionService sectionService = new SectionService(mockSectionRepository,mockWarehouseService);
-
-
 
         Mockito.when(mockSectionValidDueDateInterface.getDueDate()).thenReturn(validProduct.getDueDate());
         Mockito.when(mockSectionValidDueDateInterface.getProductId()).thenReturn(validProduct.getProductId());
@@ -94,8 +87,6 @@ public class SectionTest {
         List<SectionRepository.ValidDueDateProducts> listA = new ArrayList<>();
         listA.add(mockSectionValidDueDateInterface);
 
-
-        
         Mockito.when(mockSectionRepository.findValidDueDateProducts(Mockito.anyLong())).thenReturn(listA);
 
         List<ValidDueDateProductsDto> validDueDateDtoList = sectionService.getValidDueDateProducts(3L, 10);

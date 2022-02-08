@@ -2,7 +2,6 @@ package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.dtos.ValidDueDateProductsDto;
-import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.service.SectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,13 +20,11 @@ public class SectionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SectionDto> get(@PathVariable Long id) {
-
         return ResponseEntity.ok().body(sectionService.get(id));
     }
 
     @PostMapping()
     public  ResponseEntity<SectionDto> newSection(@Valid @RequestBody SectionDto s) {
-
         return ResponseEntity.status(201).body(sectionService.save(s));
     }
 

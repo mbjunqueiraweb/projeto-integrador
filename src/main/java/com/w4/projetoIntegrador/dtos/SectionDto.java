@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.entities.Warehouse;
 import com.w4.projetoIntegrador.enums.ProductTypes;

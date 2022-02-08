@@ -41,7 +41,7 @@ public class BatchDto {
     @NotNull
     private Long productId;
 
-    public static Batch convert(BatchDto batchDto, ProductAnnouncement pa, Integer stock){
+    public static Batch convert(BatchDto batchDto, ProductAnnouncement pa, Integer stock) {
         Batch batch = Batch.builder()
                 .dueDate(batchDto.getDueDate())
                 .currentTemperature(batchDto.getCurrentTemperature())
@@ -54,7 +54,7 @@ public class BatchDto {
         return batch;
     }
 
-    public static BatchDto convert(Batch batch){
+    public static BatchDto convert(Batch batch) {
         return BatchDto.builder()
                 .id(batch.getId())
                 .initialQuantity(batch.getInitialQuantity())

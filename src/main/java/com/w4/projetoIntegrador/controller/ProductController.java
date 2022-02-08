@@ -1,9 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.ProductLocationDto;
-
 import com.w4.projetoIntegrador.dtos.ProductDto;
-import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

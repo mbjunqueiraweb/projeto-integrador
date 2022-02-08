@@ -24,14 +24,13 @@ public class ProductDto {
     @NotEmpty
     private String productType;
 
-    public static Product convert(ProductDto p){
+    public static Product convert(ProductDto p) {
         ProductTypes type = ProductTypes.valueOf(p.getProductType());
         Product product = Product.builder().name(p.getName()).productType(type).build();
-        return  product;
+        return product;
     }
 
-    public static ProductDto convert(Product product){
-
+    public static ProductDto convert(Product product) {
         return ProductDto.builder().name(product.getName()).productType(product.getProductType().toString()).build();
     }
 }
