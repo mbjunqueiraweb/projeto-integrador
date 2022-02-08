@@ -1,22 +1,16 @@
 package com.w4.projetoIntegrador.unitTests;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.dtos.CartDto;
 import com.w4.projetoIntegrador.dtos.ItemCartDto;
-import com.w4.projetoIntegrador.dtos.WarehouseDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.repository.CartRepository;
-import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import com.w4.projetoIntegrador.service.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;

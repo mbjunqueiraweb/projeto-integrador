@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.entities.Cart;
 import com.w4.projetoIntegrador.entities.ItemCart;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
@@ -9,9 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Data
 @NoArgsConstructor

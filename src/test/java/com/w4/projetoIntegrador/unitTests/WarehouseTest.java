@@ -2,9 +2,7 @@ package com.w4.projetoIntegrador.unitTests;
 
 import com.w4.projetoIntegrador.dtos.ProductsByWarehouseDto;
 import com.w4.projetoIntegrador.dtos.WarehouseDto;
-import com.w4.projetoIntegrador.dtos.WarehouseStockDto;
 import com.w4.projetoIntegrador.entities.Warehouse;
-import com.w4.projetoIntegrador.repository.InboundRepository;
 import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import com.w4.projetoIntegrador.service.WarehouseService;
 import org.junit.jupiter.api.Test;
@@ -74,7 +72,6 @@ public class WarehouseTest {
         //act
         ProductsByWarehouseDto pw = warehouseService.getWarehouseStock(1L);
 
-        System.out.println(pw);
         //assertion
         assertTrue(pw.getWarehouses().get(0).getWarehosecode().equals(1L));
 

@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.entities.Product;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.entities.Seller;
@@ -10,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -48,7 +46,7 @@ public class ProductAnnouncementDto {
     @NotNull
     private Long sellerId;
 
-    public static ProductAnnouncementDto convert(ProductAnnouncement pa){
+    public static ProductAnnouncementDto convert(ProductAnnouncement pa) {
         return ProductAnnouncementDto.builder()
                 .id(pa.getId())
                 .name(pa.getName())
@@ -62,7 +60,7 @@ public class ProductAnnouncementDto {
                 .build();
     }
 
-    public static ProductAnnouncement convert(ProductAnnouncementDto paDto, Seller seller, Product product){
+    public static ProductAnnouncement convert(ProductAnnouncementDto paDto, Seller seller, Product product) {
         return ProductAnnouncement.builder()
                 .name(paDto.getName())
                 .brand(paDto.getBrand())

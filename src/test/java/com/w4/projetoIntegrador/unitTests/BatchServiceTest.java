@@ -1,15 +1,11 @@
 package com.w4.projetoIntegrador.unitTests;
 
 import com.w4.projetoIntegrador.dtos.BatchDto;
-import com.w4.projetoIntegrador.dtos.BuyerDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
-import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
-import com.w4.projetoIntegrador.repository.BuyerRepository;
 import com.w4.projetoIntegrador.service.BatchService;
-import com.w4.projetoIntegrador.service.BuyerService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

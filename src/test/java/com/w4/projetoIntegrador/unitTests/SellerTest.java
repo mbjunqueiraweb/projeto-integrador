@@ -1,7 +1,5 @@
 package com.w4.projetoIntegrador.unitTests;
 
-
-
 import com.w4.projetoIntegrador.dtos.SellerDto;
 import com.w4.projetoIntegrador.entities.Seller;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;

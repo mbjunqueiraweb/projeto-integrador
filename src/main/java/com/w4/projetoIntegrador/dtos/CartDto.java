@@ -33,11 +33,11 @@ public class CartDto {
 
     private BigDecimal totalPrice;
 
-    public static CartDto convert(Cart cart){
+    public static CartDto convert(Cart cart) {
 
         List<ItemCartDto> itemCartDtoList = new ArrayList<>();
 
-        for (ItemCart itemCart: cart.getItemCarts()) {
+        for (ItemCart itemCart : cart.getItemCarts()) {
             itemCartDtoList.add(ItemCartDto.convert(itemCart));
         }
 
@@ -51,9 +51,9 @@ public class CartDto {
         // Não está injetando total price que deve ser injetado na Service
     }
 
-    public static Cart convert(CartDto cartDto){
+    public static Cart convert(CartDto cartDto) {
 
         return Cart.builder().date(cartDto.getDate()).statusCode(cartDto.statusCode).build();
-    // Não esta injetanfo buyer e itemCarts
+        // Não esta injetanfo buyer e itemCarts
     }
 }
