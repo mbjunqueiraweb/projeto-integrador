@@ -40,6 +40,7 @@ public class SectionDto {
                 .id(section.getId())
                 .type(section.getType())
                 .totalSpace(section.getTotalSpace())
+                .warehouseId(section.getWarehouse().getId())
                 .build();
     }
 }

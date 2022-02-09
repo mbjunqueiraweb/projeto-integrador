@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.unitTests;
 
-import com.w4.projetoIntegrador.dtos.AgentDto;
 import com.w4.projetoIntegrador.entities.Agent;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.enums.ProductTypes;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 
 public class AgentTest {
 
@@ -35,12 +33,11 @@ public class AgentTest {
 
     @Test
     public void deveCadastrarUmAgent() {
-        AgentDto agentDto = AgentDto.builder().name("agent").sectionId(1L).build();
+        Agent agentDto = Agent.builder().name("agent").section(section).build();
         Mockito.when(sectionService.getSection(1L)).thenReturn(section);
         Mockito.when(agentRepository.save(Mockito.any())).thenReturn(agent);
-        AgentDto agentDtoSaved = agentService.save(agentDto);
+        Agent agentDtoSaved = agentService.save(agentDto, section.getId());
         assertEquals(agentDtoSaved.getId(), 12L);
-
 
     }
 
@@ -54,9 +51,8 @@ public class AgentTest {
     @Test
     public void deveRetornarUmAgentDto() {
         Mockito.when(agentRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(agent));
-        AgentDto agentActualDto = agentService.get(1L);
+        Agent agentActualDto = agentService.getAgent(1L);
         assertEquals(agent.getName(), agentActualDto.getName());
-        assertEquals(agent.getSection().getId(), agentActualDto.getSectionId());
     }
 
     @Test

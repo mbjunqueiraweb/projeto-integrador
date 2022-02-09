@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.service;
 
-import com.w4.projetoIntegrador.dtos.AgentDto;
 import com.w4.projetoIntegrador.entities.Agent;
 import com.w4.projetoIntegrador.entities.Section;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
@@ -26,16 +25,10 @@ public class AgentService {
         }
     }
 
-    public AgentDto get(Long id) {
-
-        return AgentDto.convert(getAgent(id));
-    }
-
-    public AgentDto save(AgentDto agentDto) {
-        Section section = sectionService.getSection(agentDto.getSectionId());
-        Agent agent = AgentDto.convert(agentDto, section);
+    public Agent save(Agent agent, Long sectionId) {
+        Section section = sectionService.getSection(sectionId);
+        agent.setSection(section);
         agent = agentRepository.save(agent);
-        agentDto.setId(agent.getId());
-        return agentDto;
+        return agent;
     }
 }

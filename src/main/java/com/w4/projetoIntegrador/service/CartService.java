@@ -8,6 +8,7 @@ import com.w4.projetoIntegrador.repository.CartRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class CartService {
 
         Buyer buyer = buyerService.getBuyer(cartDto.getBuyerId());
         Cart cart = CartDto.convert(cartDto);
+        cart.setDate(LocalDate.now());
         cart.setBuyer(buyer);
 
         List<ItemCart> itemCartList = new ArrayList<>();
@@ -67,14 +69,14 @@ public class CartService {
         cartRepository.save(cart);
         cartDto.setId(cart.getId());
         cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
-        return cartDto;
+        return CartDto.convert(cart);
     }
 
     public CartDto updateCart(Long id, CartDto cartDto) {
         Cart cart = cartRepository.findById(id).orElse(null);
         cart.setBuyer(buyerService.getBuyer(cartDto.getBuyerId()));
-        cart.setDate(cartDto.getDate());
-        cart.setStatusCode(cart.getStatusCode());
+        cart.setDate(cart.getDate());
+        cart.setStatusCode(cartDto.getStatusCode());
 
         List<ItemCart> itemCarts = new ArrayList<>();
 
@@ -89,8 +91,9 @@ public class CartService {
         cart.setItemCarts(itemCarts);
         cartRepository.save(cart);
         cartDto.setTotalPrice(getTotalPrice(cart.getItemCarts()));
-
-        return cartDto;
+        CartDto cartResponse = CartDto.convert(cart);
+        cartResponse.setTotalPrice(cartDto.getTotalPrice());
+        return cartResponse;
     }
 
     private BigDecimal getTotalPrice(List<ItemCart> itemCartList) {

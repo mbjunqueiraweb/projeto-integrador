@@ -8,6 +8,7 @@ import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,11 @@ public class WarehouseService {
 
     WarehouseRepository warehouseRepository;
 
-    public WarehouseService(WarehouseRepository warehouseRepository){
+    public WarehouseService(WarehouseRepository warehouseRepository) {
         this.warehouseRepository = warehouseRepository;
     }
 
-    public Warehouse getWarehouse(Long id){
+    public Warehouse getWarehouse(Long id) {
         try {
             return warehouseRepository.findById(id).orElse(null);
         } catch (RuntimeException e) {
@@ -36,12 +37,13 @@ public class WarehouseService {
         return WarehouseDto.convert(warehouseRepository.save(wh));
     }
 
-    public ProductsByWarehouseDto getWarehouseStock(Long id){
-       List<WarehouseRepository.ProductWarehouse> list = warehouseRepository.getStockByWarehouse(id);
-       ProductsByWarehouseDto pto = ProductsByWarehouseDto.builder().productId(id)
-               .build();
-       List<WarehouseStockDto> wd = new ArrayList<>();
-        for (WarehouseRepository.ProductWarehouse item:list){
+    public ProductsByWarehouseDto getWarehouseStock(Long id) {
+        List<WarehouseRepository.ProductWarehouse> list = warehouseRepository.getStockByWarehouse(id);
+        if (list.size() == 0) throw new NotFoundException("Não encontrado produto com id " + id);
+        ProductsByWarehouseDto pto = ProductsByWarehouseDto.builder().productId(id)
+                .build();
+        List<WarehouseStockDto> wd = new ArrayList<>();
+        for (WarehouseRepository.ProductWarehouse item : list) {
             WarehouseStockDto ws = WarehouseStockDto.builder().warehosecode(item.getWarehouse()).totalquantity(item.getStock()).build();
             wd.add(ws);
         }

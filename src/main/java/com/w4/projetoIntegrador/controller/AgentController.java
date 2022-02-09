@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.AgentDto;
+import com.w4.projetoIntegrador.entities.Agent;
 import com.w4.projetoIntegrador.service.AgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +18,13 @@ public class AgentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AgentDto> getAgent(@PathVariable Long id) {
-        return ResponseEntity.ok().body(agentService.get(id));
+        return ResponseEntity.ok().body(AgentDto.convert(agentService.getAgent(id)));
     }
 
     @PostMapping("/")
     public ResponseEntity<AgentDto> newAgent(@Valid @RequestBody AgentDto agentDto) {
-       return ResponseEntity.status(201).body(agentService.save(agentDto));
+       Agent agent =  agentService.save(AgentDto.convert(agentDto), agentDto.getSectionId());
+       return ResponseEntity.status(201).body(AgentDto.convert(agent));
     }
 }
 

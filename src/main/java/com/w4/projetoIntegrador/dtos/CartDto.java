@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,10 @@ public class CartDto {
     private List<ItemCartDto> products;
 
     private BigDecimal totalPrice;
+
+    private LocalDateTime scheduledDateTimeFrom;
+
+    private LocalDateTime scheduledDateTimeTo;
 
     public static CartDto convert(Cart cart) {
 
