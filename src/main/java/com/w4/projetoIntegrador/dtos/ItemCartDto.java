@@ -14,7 +14,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ItemCartDto {
+public class
+ItemCartDto {
 
     private Long id;
 
