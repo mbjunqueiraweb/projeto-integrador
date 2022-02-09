@@ -4,7 +4,6 @@ import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ProductLocationDto;
 import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.entities.Batch;
-import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.dtos.ProductDto;
 
 import com.w4.projetoIntegrador.entities.Product;
@@ -13,10 +12,8 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
-import com.w4.projetoIntegrador.repository.InboundRepository;
 import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
 import com.w4.projetoIntegrador.repository.ProductRepository;
-import com.w4.projetoIntegrador.repository.SectionRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -130,7 +127,7 @@ public class ProductService {
                 SectionDto sDto = SectionDto.convert(sectionService.getSection(b.getSection()));
                 List<BatchDto> batchDtoList = new ArrayList<>();
                 List<BatchRepository.SoldStock> batchStockList = batchRepository.getStock(id, b.getSection());
-                for(BatchRepository.SoldStock batchStock: batchStockList){
+                for (BatchRepository.SoldStock batchStock : batchStockList) {
                     Batch batch = batchService.getBatch(batchStock.getBatch());
                     batchDtoList.add(BatchDto.convert(batch));
                 }
@@ -145,7 +142,9 @@ public class ProductService {
     }
 
     public ProductLocationDto orderProductByCategory(Long id, Character ordenation) {
-        ProductLocationDto productLocationDto = getProductLocation(id).get(0);
+        List<ProductLocationDto> productLocationDtoList = getProductLocation(id);
+        if (productLocationDtoList.size() == 0) throw new NotFoundException("Não encontrado");
+        ProductLocationDto productLocationDto = productLocationDtoList.get(0);
 
         List<BatchDto> batchList;
 

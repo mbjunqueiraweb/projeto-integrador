@@ -43,9 +43,6 @@ public class ProductAnnouncementService {
         Product p = productService.getProduct(productAnnouncementDto.getProductId());
         Seller seller = sellerService.getSeller(productAnnouncementDto.getSellerId());
         ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto,seller,p);
-
-        //Todo implementar sevice de seller para validar
-
         productAnnouncementRepository.save(productAnnouncement);
 
         return productAnnouncementDto;

@@ -17,8 +17,6 @@ import com.w4.projetoIntegrador.repository.SectionRepository.ValidDueDateProduct
 
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
-
 @Service
 public class SectionService {
 

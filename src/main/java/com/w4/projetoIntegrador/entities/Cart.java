@@ -26,8 +26,8 @@ public class Cart {
 
     private LocalDate date;
 
-    @Transient
-    private Long buyerId;
+//    @Transient
+//    private Long buyerId;
 
     private String statusCode;
 
@@ -39,7 +39,6 @@ public class Cart {
     private List<ItemCart> itemCarts;
 
     @ManyToOne
-    @JsonIgnore
     private Buyer buyer;
 
 }
