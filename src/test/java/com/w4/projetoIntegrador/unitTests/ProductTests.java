@@ -64,7 +64,9 @@ public class ProductTests {
     private Agent agent = Agent.builder().id(1L).build();
 
     private Warehouse warehouse = Warehouse.builder().id(1L).name("warehouse").build();
-    private Section section = Section.builder().id(1L).totalSpace(10000f).warehouseId(1L).warehouse(warehouse).build();
+//    private Section section = Section.builder().id(1L).totalSpace(10000f).warehouseId(1L).warehouse(warehouse).build();
+private Section section = Section.builder().id(1L).totalSpace(10000f).warehouse(warehouse).build();
+
 
     private InboundDto validInboundDto1 = InboundDto.builder()
             .agentId(1L)
@@ -169,8 +171,8 @@ public class ProductTests {
         ProductLocationDto plDto = productService.orderProductByCategory(1L, 'L');
 
         //assertion
-        assertTrue(plDto.getBatchStock().size() == 2);
-        assertTrue(plDto.getBatchStock().get(0).getId().equals(1L));
+        assertTrue(plDto.getBatchStockDto().size() == 2);
+        assertTrue(plDto.getBatchStockDto().get(0).getId().equals(1L));
     }
 
     @Test
@@ -194,8 +196,8 @@ public class ProductTests {
         ProductLocationDto plDto = productService.orderProductByCategory(1L, 'C');
 
         //assertion
-        assertTrue(plDto.getBatchStock().size() == 2);
-        assertTrue(plDto.getBatchStock().get(0).getStock().equals(10));
+        assertTrue(plDto.getBatchStockDto().size() == 2);
+        assertTrue(plDto.getBatchStockDto().get(0).getStock().equals(10));
     }
 
     @Test
@@ -219,7 +221,7 @@ public class ProductTests {
         ProductLocationDto plDto = productService.orderProductByCategory(1L, 'F');
 
         //assertion
-        assertTrue(plDto.getBatchStock().size() == 2);
-        assertTrue(plDto.getBatchStock().get(0).getDueDate().equals(LocalDate.now().minusDays(5)));
+        assertTrue(plDto.getBatchStockDto().size() == 2);
+        assertTrue(plDto.getBatchStockDto().get(0).getDueDate().equals(LocalDate.now().minusDays(5)));
     }
 }

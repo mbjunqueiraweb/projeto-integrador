@@ -26,6 +26,7 @@ public class BatchDto {
 
     @NotNull
     private Integer initialQuantity;
+    private Integer stock;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -60,6 +61,7 @@ public class BatchDto {
                 .initialQuantity(batch.getInitialQuantity())
                 .manufacturingDateTime(batch.getManufacturingDateTime())
                 .dueDate(batch.getDueDate())
+                .stock(batch.getStock())
                 .currentTemperature(batch.getCurrentTemperature())
                 .productId(batch.getProductAnnouncement().getId())
                 .build();

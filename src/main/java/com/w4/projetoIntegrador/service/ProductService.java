@@ -1,5 +1,6 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ProductLocationDto;
 import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.entities.Inbound;
@@ -115,44 +116,46 @@ public class ProductService {
         ProductAnnouncement product = productAnnouncementRepository.findById(id).orElse(null);
 
         List<Batch> batchesList = batchRepository.findByProductAnnouncement(product);
-        for (Batch batch : batchesList) {
-            batch.setProductId(id);
+        List<BatchDto> batchesDtoList = new ArrayList<>();
+        for (Batch b: batchesList){
+            batchesDtoList.add(BatchDto.convert(b));
         }
+
         Inbound foundedInbound = inboundRepository.getById(id);
         ProductLocationDto productLocationDto = new ProductLocationDto();
-        productLocationDto.setBatchStock(batchesList);
+        productLocationDto.setBatchStockDto(batchesDtoList);
+
         productLocationDto.setProductId(id);
         productLocationDto.setSection(foundedInbound.getSection());
-        productLocationDto.getSection().setWarehouseId(foundedInbound.getSection().getWarehouse().getId());
         return productLocationDto;
     }
 
     public ProductLocationDto orderProductByCategory(Long id, Character ordenation) {
         ProductLocationDto productLocationDto = getProductLocation(id);
 
-        List<Batch> batchList;
+        List<BatchDto> batchList;
 
         if (ordenation == null) return productLocationDto;
 
         switch (ordenation) {
             case 'L':
-                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingLong(Batch::getId)).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted(Comparator.comparingLong(BatchDto::getId)).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 
             case 'C':
-                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingInt(Batch::getStock)).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted(Comparator.comparingInt(BatchDto::getStock)).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 
             case 'F':
-                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> String.CASE_INSENSITIVE_ORDER.compare(b1.getDueDate().toString(), b2.getDueDate().toString())).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted((b1, b2) -> String.CASE_INSENSITIVE_ORDER.compare(b1.getDueDate().toString(), b2.getDueDate().toString())).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 

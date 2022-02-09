@@ -32,7 +32,6 @@ public class SectionService {
     public Section getSection(Long id) {
         try {
             Section section = sectionRepository.findById(id).orElse(null);
-            section.setWarehouseId(section.getWarehouse().getId());
             return section;
         } catch (RuntimeException e) {
             throw new NotFoundException("Section " + id + " não encontrada na base de dados.");

@@ -45,17 +45,17 @@ public class Batch {
 
     @NotNull
     private Float currentTemperature;
-
-    //TODO usado em product Location refatorar (????)
-    private Long productId;
+//
+//    //TODO usado em product Location refatorar (????)
+//    private Long productId;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @NotNull
     private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     @NotNull
     private Inbound inbound;
 }

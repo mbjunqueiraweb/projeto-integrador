@@ -28,13 +28,13 @@ public class ItemCart {
     private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Cart cart;
 
     @NotNull
     private Integer quantity;
-
-    @Transient
-    private Long productAnnouncementId;
+//
+//    @Transient
+//    private Long productAnnouncementId;
 
 }
