@@ -33,7 +33,6 @@ public class InboundDto {
     @NotNull
     private Long agentId;
 
-    @Valid
     @NotNull
     @JsonAlias("batchList")
     private List<BatchDto> batchDtoList;

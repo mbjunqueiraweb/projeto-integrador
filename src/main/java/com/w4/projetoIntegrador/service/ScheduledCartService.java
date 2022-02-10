@@ -76,6 +76,7 @@ public class ScheduledCartService {
         List<ScheduledItemCart> itemCartList = new ArrayList<>();
 
         for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
+            if (scheduledItemCartDto.getQuantity() < 1) throw new BusinessException("É necessário comprar ao menos 1 Item");
             ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());
             Integer stock = warehouseService
                     .getWarehouseStock(p.getId())
@@ -106,6 +107,7 @@ public class ScheduledCartService {
                 checkSchedule(scheduledCartDto.getScheduledDateTimeFrom(), scheduledCartDto.getScheduledDateTimeTo());
                 scheduledCart.setScheduledDateTimeFrom(scheduledCartDto.getScheduledDateTimeFrom());
                 scheduledCart.setScheduledDateTimeTo(scheduledCartDto.getScheduledDateTimeTo());
+                scheduledCart.setStatusCode("fechado");
             } else {
                 throw new BusinessException("É necessário definir agendamento para fechar o pedido");
             }
@@ -117,6 +119,7 @@ public class ScheduledCartService {
         List<ScheduledItemCart> itemCarts = new ArrayList<>();
 
         for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
+            if (scheduledItemCartDto.getQuantity() < 1) throw new BusinessException("É necessário comprar ao menos 1 Item");
             ScheduledItemCart scheduledItemCart = scheduledItemCartService.getPurchaseProduct(scheduledItemCartDto.getId());
             scheduledItemCart.setQuantity(scheduledItemCartDto.getQuantity());
             ProductAnnouncement productAnnouncement = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());

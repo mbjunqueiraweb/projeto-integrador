@@ -50,7 +50,6 @@ public class InboundService {
                 throw new BusinessException("O representante não pertence a este setor");
 
             List<BatchDto> batchDtoList = inboundDto.getBatchDtoList();
-
             List<ProductAnnouncement> productsAnnouncementsList = batchDtoList.stream()
                     .map(b -> productAnnouncementService.getProductAnnouncement(b.getProductId()))
                     .collect(Collectors.toList());
@@ -63,7 +62,9 @@ public class InboundService {
             inboundDto.setDate(LocalDateTime.now());
             Inbound inbound = InboundDto.convert(inboundDto, batchList, section, agent);
             inbound.getBatchList().stream().forEach(batch -> batch.setInbound(inbound));
+            System.out.println("a");
             inboundRepository.save(inbound);
+            System.out.println("b");
 
             return InboundDto.convert(inbound);
         } catch (RuntimeException e) {
@@ -133,6 +134,8 @@ public class InboundService {
     }
 
     private void checkBusinessValidateBatch(BatchDto batchDto, ProductAnnouncement pa) {
+        if(batchDto.getInitialQuantity() < 1)
+            throw new BusinessException("O lote deve conter ao menos 1 item");
         if (batchDto.getDueDate().isBefore(LocalDate.now().plusDays(10)))
             throw new BusinessException("Data de validade não pode ser inferior a daqui a 10 dias");
         if (batchDto.getManufacturingDateTime().isAfter(LocalDateTime.now()))
