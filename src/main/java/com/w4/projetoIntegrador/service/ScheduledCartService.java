@@ -22,15 +22,18 @@ public class ScheduledCartService {
     BuyerService buyerService;
     ScheduledItemCartService scheduledItemCartService;
     ProductAnnouncementService productAnnouncementService;
+    WarehouseService warehouseService;
 
-    public ScheduledCartService(  ScheduledCartRepository scheduledCartRepository,
-                         BuyerService buyerService,
-                                  ScheduledItemCartService scheduledItemCartService,
-                         ProductAnnouncementService productAnnouncementService){
+    public ScheduledCartService(ScheduledCartRepository scheduledCartRepository,
+                                BuyerService buyerService,
+                                ScheduledItemCartService scheduledItemCartService,
+                                ProductAnnouncementService productAnnouncementService,
+                                WarehouseService warehouseService) {
         this.scheduledCartRepository = scheduledCartRepository;
         this.buyerService = buyerService;
         this.scheduledItemCartService = scheduledItemCartService;
         this.productAnnouncementService = productAnnouncementService;
+        this.warehouseService = warehouseService;
     }
 
     public ScheduledCartDto get(Long id) {
@@ -43,7 +46,7 @@ public class ScheduledCartService {
     public ScheduledCart getCart(Long id) {
 
         try {
-            ScheduledCart  scheduledCart = scheduledCartRepository.findById(id).orElse(new ScheduledCart());
+            ScheduledCart scheduledCart = scheduledCartRepository.findById(id).orElse(new ScheduledCart());
             List<ProductAnnouncement> productAnnouncements = new ArrayList<ProductAnnouncement>();
             for (ScheduledItemCart scheduledItemCart : scheduledCart.getScheduledItemCarts()) {
                 productAnnouncements.add(scheduledItemCart.getProductAnnouncement());
@@ -58,7 +61,7 @@ public class ScheduledCartService {
 
         ScheduledCart scheduledCart = new ScheduledCart();
 
-        if (isScheduleNotNull(scheduledCartDto)){
+        if (isScheduleNotNull(scheduledCartDto)) {
             checkSchedule(scheduledCartDto.getScheduledDateTimeFrom(), scheduledCartDto.getScheduledDateTimeTo());
             scheduledCart.setScheduledDateTimeFrom(scheduledCartDto.getScheduledDateTimeFrom());
             scheduledCart.setScheduledDateTimeTo(scheduledCartDto.getScheduledDateTimeTo());
@@ -74,6 +77,15 @@ public class ScheduledCartService {
 
         for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
             ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());
+            Integer stock = warehouseService
+                    .getWarehouseStock(p.getId())
+                    .getWarehouses()
+                    .stream()
+                    .map(w -> w.getTotalquantity())
+                    .reduce((acc, res) -> acc + res).orElse(0);
+            if (stock < scheduledItemCartDto.getQuantity()) throw new BusinessException("Produto indisponível");
+
+
             itemCartList.add(ScheduledItemCartDto.convert(scheduledItemCartDto, p, scheduledCart));
         }
         scheduledCart.setScheduledItemCarts(itemCartList);
@@ -89,17 +101,15 @@ public class ScheduledCartService {
 
         ScheduledCart scheduledCart = scheduledCartRepository.findById(id).orElse(null);
 
-        System.out.println(isScheduleNotNull(scheduledCartDto));
-
-        if(scheduledCartDto.getStatusCode().equals("fechado")){
-            if (isScheduleNotNull(scheduledCartDto)){
+        if (scheduledCartDto.getStatusCode().equals("fechado")) {
+            if (isScheduleNotNull(scheduledCartDto)) {
                 checkSchedule(scheduledCartDto.getScheduledDateTimeFrom(), scheduledCartDto.getScheduledDateTimeTo());
                 scheduledCart.setScheduledDateTimeFrom(scheduledCartDto.getScheduledDateTimeFrom());
                 scheduledCart.setScheduledDateTimeTo(scheduledCartDto.getScheduledDateTimeTo());
-            }else{
+            } else {
                 throw new BusinessException("É necessário definir agendamento para fechar o pedido");
             }
-       }
+        }
 
         scheduledCart.setBuyer(buyerService.getBuyer(scheduledCartDto.getBuyerId()));
         scheduledCart.setDate(scheduledCart.getDate());
@@ -137,9 +147,10 @@ public class ScheduledCartService {
         return (s.getScheduledDateTimeFrom() != null && s.getScheduledDateTimeTo() != null);
     }
 
-    private void checkSchedule(LocalDateTime from, LocalDateTime to){
-        System.out.println("checando");
-        if (from.isBefore(LocalDateTime.now().plusDays(1))) throw new BusinessException("Impossível entregar na data solicitada");
-        if (to.isBefore(from.plusHours(3))) throw new BusinessException("É necessário definir uma janela mínima de 3 horas para esta entrega");
+    private void checkSchedule(LocalDateTime from, LocalDateTime to) {
+        if (from.isBefore(LocalDateTime.now().plusDays(1)))
+            throw new BusinessException("Impossível entregar na data solicitada");
+        if (to.isBefore(from.plusHours(3)))
+            throw new BusinessException("É necessário definir uma janela mínima de 3 horas para esta entrega");
     }
 }

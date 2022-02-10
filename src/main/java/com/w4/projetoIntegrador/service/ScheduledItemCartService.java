@@ -1,10 +1,7 @@
 package com.w4.projetoIntegrador.service;
 
-import com.w4.projetoIntegrador.entities.ItemCart;
-import com.w4.projetoIntegrador.entities.ScheduledCart;
 import com.w4.projetoIntegrador.entities.ScheduledItemCart;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
-import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import com.w4.projetoIntegrador.repository.ScheduledItemCartRepository;
 import org.springframework.stereotype.Service;
 
