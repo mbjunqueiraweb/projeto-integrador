@@ -36,12 +36,6 @@ Modelo de SQL
 
 ```
 
-//drop database if exists integrator_project;
-
-//create database integrator_project;
-
-//use integrator_project;
-
 ##User.java
 INSERT INTO users (username, password, enabled, profile_type) values ("Matheus", "AJDUJ*&@!", true, "AGENT");
 INSERT INTO users (username, password, enabled, profile_type) values ("Mauro", "Alkvme*&@!", false, "BUYER");
