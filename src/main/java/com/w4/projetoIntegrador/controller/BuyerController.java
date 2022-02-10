@@ -22,5 +22,4 @@ public class BuyerController {
     public ResponseEntity<BuyerDto> createBuyer(@RequestBody BuyerDto buyerDto){
         return ResponseEntity.status(201).body(buyerService.create(buyerDto));
     }
-
 }

@@ -23,7 +23,7 @@ public class ScheduledItemCartDto {
     @NotNull
     private Long productAnnouncementId;
 
-    public static ScheduledItemCartDto convert(ScheduledItemCart scheduledItemCart){
+    public static ScheduledItemCartDto convert(ScheduledItemCart scheduledItemCart) {
         return ScheduledItemCartDto.builder()
                 .id(scheduledItemCart.getId())
                 .quantity(scheduledItemCart.getQuantity())
@@ -33,13 +33,11 @@ public class ScheduledItemCartDto {
 
     public static ScheduledItemCart convert(ScheduledItemCartDto scheduledItemCartDto,
                                             ProductAnnouncement p,
-                                            ScheduledCart c)
-    {
+                                            ScheduledCart c) {
         return ScheduledItemCart.builder()
                 .scheduledCart(c)
                 .productAnnouncement(p)
                 .quantity(scheduledItemCartDto.getQuantity())
                 .build();
     }
-
 }

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductLocationDto {
-    
+
     private SectionDto section;
 
     private Long productId;

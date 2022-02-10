@@ -49,5 +49,4 @@ public class ProductAnnouncement {
 
     @ManyToOne
     private Seller seller;
-
 }

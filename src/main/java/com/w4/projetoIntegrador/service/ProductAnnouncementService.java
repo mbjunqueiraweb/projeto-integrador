@@ -42,10 +42,9 @@ public class ProductAnnouncementService {
     public ProductAnnouncementDto save(ProductAnnouncementDto productAnnouncementDto) {
         Product p = productService.getProduct(productAnnouncementDto.getProductId());
         Seller seller = sellerService.getSeller(productAnnouncementDto.getSellerId());
-        ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto,seller,p);
+        ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto, seller, p);
         productAnnouncementRepository.save(productAnnouncement);
 
         return productAnnouncementDto;
     }
-
 }

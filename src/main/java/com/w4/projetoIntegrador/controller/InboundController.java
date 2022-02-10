@@ -18,16 +18,15 @@ public class InboundController {
     @GetMapping("/{id}")
     public ResponseEntity<InboundDto> getInbound(@PathVariable Long id) {
         return ResponseEntity.ok().body(inboundService.get(id));
-        }
+    }
 
     @PostMapping
     public ResponseEntity<InboundDto> cadastra(@Valid @RequestBody InboundDto inbound) {
-        //validar o agent via token
-    return ResponseEntity.status(201).body(inboundService.create(inbound));
+        return ResponseEntity.status(201).body(inboundService.create(inbound));
     }
 
-   @PutMapping("/{id}")
-   public ResponseEntity<InboundDto> putIndound(@Valid @RequestBody InboundDto inbound, @PathVariable Long id){
-       return ResponseEntity.status(201).body(inboundService.update(id, inbound));
-   }
+    @PutMapping("/{id}")
+    public ResponseEntity<InboundDto> putIndound(@Valid @RequestBody InboundDto inbound, @PathVariable Long id) {
+        return ResponseEntity.status(201).body(inboundService.update(id, inbound));
+    }
 }

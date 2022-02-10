@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +65,6 @@ public class ProductTests {
 
     private Warehouse warehouse = Warehouse.builder().id(1L).name("warehouse").build();
     private Section section = Section.builder().id(1L).totalSpace(10000f).warehouse(warehouse).build();
-
 
     private InboundDto validInboundDto1 = InboundDto.builder()
             .agentId(1L)
@@ -150,82 +150,137 @@ public class ProductTests {
         assertTrue(pDtoList.get(0).getProductType().equals("congelado"));
     }
 
-//    @Test
-//    public void deveObterUmaListaDeProdutosOrdenadosPorIdDeStock() {
-//
-//        //arrange
-//        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
-//        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
-//        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
-//       // InboundRepository mockInboundRepository = Mockito.mock(InboundRepository.class);
-//
-//        BatchService mockBatchService = Mockito.mock(BatchService.class);
-//        SectionService mockSectionService = Mockito.mock(SectionService.class);
-//
-//        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
-//        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
-//        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
-//        Mockito.when(mockBatchService.getBatch(Mockito.anyLong())).thenReturn(batch1);
-//        Mockito.when(mockSectionService.getSection(Mockito.anyLong())).thenReturn(section);
-//        //Mockito.when(mockInboundRepository.getById(Mockito.anyLong())).thenReturn(inbound1);
-//
-//        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockBatchService, mockSectionService);
-//
-//        //act
-//        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'L');
-//
-//        //assertion
-//        assertTrue(plDto.getBatchStockDto().size() == 2);
-//        assertTrue(plDto.getBatchStockDto().get(0).getId().equals(1L));
-//    }
-//
-//    @Test
-//    public void deveObterUmaListaDeProdutosOrdenadosPorStock() {
-//
-//        //arrange
-//        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
-//        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
-//        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
-//        InboundRepository mockInboundRepository = Mockito.mock(InboundRepository.class);
-//        SectionRepository mockSectionRepository = Mockito.mock(SectionRepository.class);
-//
-//        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
-//        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
-//        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
-//        Mockito.when(mockInboundRepository.getById(Mockito.anyLong())).thenReturn(inbound1);
-//
-//        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockInboundRepository, mockSectionRepository);
-//
-//        //act
-//        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'C');
-//
-//        //assertion
-//        assertTrue(plDto.getBatchStockDto().size() == 2);
-//        assertTrue(plDto.getBatchStockDto().get(0).getStock().equals(10));
-//    }
-//
-//    @Test
-//    public void deveObterUmaListaDeProdutosOrdenadosPorDueDate() {
-//
-//        //arrange
-//        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
-//        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
-//        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
-//        InboundRepository mockInboundRepository = Mockito.mock(InboundRepository.class);
-//        SectionRepository mockSectionRepository = Mockito.mock(SectionRepository.class);
-//
-//        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
-//        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
-//        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
-//        Mockito.when(mockInboundRepository.getById(Mockito.anyLong())).thenReturn(inbound1);
-//
-//        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockInboundRepository, mockSectionRepository);
-//
-//        //act
-//        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'F');
-//
-//        //assertion
-//        assertTrue(plDto.getBatchStockDto().size() == 2);
-//        assertTrue(plDto.getBatchStockDto().get(0).getDueDate().equals(LocalDate.now().minusDays(5)));
-//    }
+    @Test
+    public void deveObterUmaListaDeProdutosOrdenadosPorIdDeStock() {
+
+        //arrange
+        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
+        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
+        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        SectionService mockSectionService = Mockito.mock(SectionService.class);
+
+        BatchRepository.SectionById mockSectionById = Mockito.mock(BatchRepository.SectionById.class);
+        Mockito.when(mockSectionById.getSection()).thenReturn(1L);
+        Mockito.when(mockSectionById.getProductId()).thenReturn(1L);
+
+        List<BatchRepository.SectionById> idSection = new ArrayList<>();
+        idSection.add(mockSectionById);
+
+        BatchRepository.SoldStock mockSoldStock = Mockito.mock(BatchRepository.SoldStock.class);
+        Mockito.when(mockSoldStock.getStock()).thenReturn(1);
+        Mockito.when(mockSoldStock.getProductId()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getSection()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getBatch()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getWarehouse()).thenReturn(1L);
+
+        List<BatchRepository.SoldStock> soldStock = new ArrayList<>();
+        soldStock.add(mockSoldStock);
+
+        Mockito.when(mockBatchRepository.getSectionsById(Mockito.anyLong())).thenReturn(idSection);
+
+        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
+        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
+        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
+        Mockito.when(mockBatchService.getBatch(Mockito.anyLong())).thenReturn(batch1);
+        Mockito.when(mockSectionService.getSection(Mockito.anyLong())).thenReturn(section);
+        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockBatchService, mockSectionService);
+
+        //act
+        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'L');
+        System.out.println(plDto);
+
+        //assertion
+        assertTrue(plDto.getSection().getId().equals(1L));
+    }
+
+    @Test
+    public void deveObterUmaListaDeProdutosOrdenadosPorStock() {
+
+        //arrange
+        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
+        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
+        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        SectionService mockSectionService = Mockito.mock(SectionService.class);
+
+        BatchRepository.SectionById mockSectionById = Mockito.mock(BatchRepository.SectionById.class);
+        Mockito.when(mockSectionById.getSection()).thenReturn(1L);
+        Mockito.when(mockSectionById.getProductId()).thenReturn(1L);
+
+        List<BatchRepository.SectionById> idSection = new ArrayList<>();
+        idSection.add(mockSectionById);
+
+        BatchRepository.SoldStock mockSoldStock = Mockito.mock(BatchRepository.SoldStock.class);
+        Mockito.when(mockSoldStock.getStock()).thenReturn(1);
+        Mockito.when(mockSoldStock.getProductId()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getSection()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getBatch()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getWarehouse()).thenReturn(1L);
+
+        List<BatchRepository.SoldStock> soldStock = new ArrayList<>();
+        soldStock.add(mockSoldStock);
+
+        Mockito.when(mockBatchRepository.getSectionsById(Mockito.anyLong())).thenReturn(idSection);
+
+        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
+        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
+        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
+        Mockito.when(mockBatchService.getBatch(Mockito.anyLong())).thenReturn(batch1);
+        Mockito.when(mockSectionService.getSection(Mockito.anyLong())).thenReturn(section);
+        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockBatchService, mockSectionService);
+
+        //act
+        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'C');
+        System.out.println(plDto);
+
+        //assertion
+        assertTrue(plDto.getSection().getId().equals(1L));
+    }
+
+
+
+    @Test
+    public void deveObterUmaListaDeProdutosOrdenadosPorDueDate() {
+
+        //arrange
+        ProductRepository mockProductRepository = Mockito.mock(ProductRepository.class);
+        ProductAnnouncementRepository mockProductAnnouncementRepository = Mockito.mock(ProductAnnouncementRepository.class);
+        BatchRepository mockBatchRepository = Mockito.mock(BatchRepository.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        SectionService mockSectionService = Mockito.mock(SectionService.class);
+
+        BatchRepository.SectionById mockSectionById = Mockito.mock(BatchRepository.SectionById.class);
+        Mockito.when(mockSectionById.getSection()).thenReturn(1L);
+        Mockito.when(mockSectionById.getProductId()).thenReturn(1L);
+
+        List<BatchRepository.SectionById> idSection = new ArrayList<>();
+        idSection.add(mockSectionById);
+
+        BatchRepository.SoldStock mockSoldStock = Mockito.mock(BatchRepository.SoldStock.class);
+        Mockito.when(mockSoldStock.getStock()).thenReturn(1);
+        Mockito.when(mockSoldStock.getProductId()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getSection()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getBatch()).thenReturn(1L);
+        Mockito.when(mockSoldStock.getWarehouse()).thenReturn(1L);
+
+        List<BatchRepository.SoldStock> soldStock = new ArrayList<>();
+        soldStock.add(mockSoldStock);
+
+        Mockito.when(mockBatchRepository.getSectionsById(Mockito.anyLong())).thenReturn(idSection);
+
+        Mockito.when(mockProductRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product));
+        Mockito.when(mockProductAnnouncementRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(pa));
+        Mockito.when(mockBatchRepository.findByProductAnnouncement(Mockito.any())).thenReturn(batchList);
+        Mockito.when(mockBatchService.getBatch(Mockito.anyLong())).thenReturn(batch1);
+        Mockito.when(mockSectionService.getSection(Mockito.anyLong())).thenReturn(section);
+        ProductService productService = new ProductService(mockProductRepository, mockProductAnnouncementRepository, mockBatchRepository, mockBatchService, mockSectionService);
+
+        //act
+        ProductLocationDto plDto = productService.orderProductByCategory(1L, 'F');
+        System.out.println(plDto);
+
+        //assertion
+        assertTrue(plDto.getSection().getId().equals(1L));
+    }
 }

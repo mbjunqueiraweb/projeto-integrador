@@ -24,7 +24,7 @@ public class SectionController {
     }
 
     @PostMapping()
-    public  ResponseEntity<SectionDto> newSection(@Valid @RequestBody SectionDto s) {
+    public ResponseEntity<SectionDto> newSection(@Valid @RequestBody SectionDto s) {
         return ResponseEntity.status(201).body(sectionService.save(s));
     }
 

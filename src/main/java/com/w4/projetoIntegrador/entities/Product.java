@@ -28,5 +28,4 @@ public class Product {
 
     @NotNull
     private ProductTypes productType;
-
 }

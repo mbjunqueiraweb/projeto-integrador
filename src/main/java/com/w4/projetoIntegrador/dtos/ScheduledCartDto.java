@@ -1,7 +1,5 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.w4.projetoIntegrador.entities.Cart;
-import com.w4.projetoIntegrador.entities.ItemCart;
 import com.w4.projetoIntegrador.entities.ScheduledCart;
 import com.w4.projetoIntegrador.entities.ScheduledItemCart;
 import lombok.AllArgsConstructor;
@@ -57,12 +55,5 @@ public class ScheduledCartDto {
                 .scheduledDateTimeFrom(scheduledCart.getScheduledDateTimeFrom())
                 .scheduledDateTimeTo(scheduledCart.getScheduledDateTimeTo())
                 .build();
-        // Não está injetando total price que deve ser injetado na Service
     }
-
-//    public static ScheduledCart convert(ScheduledCartDto scheduledCartDto) {
-//
-//        return ScheduledCart.builder().date(scheduledCartDto.getDate()).statusCode(scheduledCartDto.statusCode).build();
-//        // Não esta injetanfo buyer e itemCarts
-//    }
 }

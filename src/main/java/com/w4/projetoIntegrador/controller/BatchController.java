@@ -19,8 +19,6 @@ public class BatchController {
     
     @GetMapping("/{id}")
     public ResponseEntity<BatchDto> getBatch(@PathVariable Long id){
-
         return ResponseEntity.ok().body(batchService.get(id));
     }
-
 }
