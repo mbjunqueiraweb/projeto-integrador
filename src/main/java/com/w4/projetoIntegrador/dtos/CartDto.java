@@ -34,10 +34,6 @@ public class CartDto {
 
     private BigDecimal totalPrice;
 
-    private LocalDateTime scheduledDateTimeFrom;
-
-    private LocalDateTime scheduledDateTimeTo;
-
     public static CartDto convert(Cart cart) {
 
         List<ItemCartDto> itemCartDtoList = new ArrayList<>();

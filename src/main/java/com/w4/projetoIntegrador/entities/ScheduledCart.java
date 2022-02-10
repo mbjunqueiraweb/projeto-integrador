@@ -1,7 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "carts")
-public class Cart {
+@Table(name = "scheduledCarts")
+public class ScheduledCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +24,15 @@ public class Cart {
 
     private LocalDate date;
 
-
     private String statusCode;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ItemCart> itemCarts;
+    private LocalDateTime scheduledDateTimeFrom;
+
+    private LocalDateTime scheduledDateTimeTo;
+
+    @OneToMany(mappedBy = "scheduledCart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<ScheduledItemCart> scheduledItemCarts;
 
     @ManyToOne
     private Buyer buyer;
-
 }
