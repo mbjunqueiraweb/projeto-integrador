@@ -3,7 +3,6 @@ package com.w4.projetoIntegrador.dtos;
 import com.w4.projetoIntegrador.entities.Cart;
 import com.w4.projetoIntegrador.entities.ItemCart;
 import com.w4.projetoIntegrador.entities.ProductAnnouncement;
-import com.w4.projetoIntegrador.entities.ScheduledCart;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

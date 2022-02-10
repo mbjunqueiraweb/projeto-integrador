@@ -43,7 +43,12 @@ public class WarehouseService {
                 .build();
         List<WarehouseStockDto> wd = new ArrayList<>();
         for (WarehouseRepository.ProductWarehouse item : list) {
-            WarehouseStockDto ws = WarehouseStockDto.builder().warehosecode(item.getWarehouse()).totalquantity(item.getStock()).build();
+            WarehouseStockDto ws = WarehouseStockDto.builder()
+                    .warehosecode(item.getWarehouse())
+                    .totalquantity(item.getStock())
+                    .section(item.getSection())
+                    .batch(item.getBatch())
+                    .build();
             wd.add(ws);
         }
         pto.setWarehouses(wd);

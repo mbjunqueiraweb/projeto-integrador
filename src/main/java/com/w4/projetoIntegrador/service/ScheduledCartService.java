@@ -2,11 +2,13 @@ package com.w4.projetoIntegrador.service;
 
 import com.w4.projetoIntegrador.dtos.ScheduledCartDto;
 import com.w4.projetoIntegrador.dtos.ScheduledItemCartDto;
+import com.w4.projetoIntegrador.dtos.WarehouseStockDto;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ScheduledCartRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,23 +19,25 @@ import java.util.List;
 @Service
 public class ScheduledCartService {
 
-
     ScheduledCartRepository scheduledCartRepository;
     BuyerService buyerService;
     ScheduledItemCartService scheduledItemCartService;
     ProductAnnouncementService productAnnouncementService;
     WarehouseService warehouseService;
+    BatchService batchService;
 
     public ScheduledCartService(ScheduledCartRepository scheduledCartRepository,
                                 BuyerService buyerService,
                                 ScheduledItemCartService scheduledItemCartService,
                                 ProductAnnouncementService productAnnouncementService,
-                                WarehouseService warehouseService) {
+                                WarehouseService warehouseService,
+                                BatchService batchService) {
         this.scheduledCartRepository = scheduledCartRepository;
         this.buyerService = buyerService;
         this.scheduledItemCartService = scheduledItemCartService;
         this.productAnnouncementService = productAnnouncementService;
         this.warehouseService = warehouseService;
+        this.batchService = batchService;
     }
 
     public ScheduledCartDto get(Long id) {
@@ -57,10 +61,10 @@ public class ScheduledCartService {
         }
     }
 
+    @Transactional
     public ScheduledCartDto create(ScheduledCartDto scheduledCartDto) {
 
         ScheduledCart scheduledCart = new ScheduledCart();
-
         if (isScheduleNotNull(scheduledCartDto)) {
             checkSchedule(scheduledCartDto.getScheduledDateTimeFrom(), scheduledCartDto.getScheduledDateTimeTo());
             scheduledCart.setScheduledDateTimeFrom(scheduledCartDto.getScheduledDateTimeFrom());
@@ -68,27 +72,29 @@ public class ScheduledCartService {
         }
 
         Buyer buyer = buyerService.getBuyer(scheduledCartDto.getBuyerId());
-
         scheduledCart.setStatusCode("aberto");
         scheduledCart.setDate(LocalDate.now());
         scheduledCart.setBuyer(buyer);
 
-        List<ScheduledItemCart> itemCartList = new ArrayList<>();
+        List<ScheduledItemCart> itemCartList = checkAvailableStock(scheduledCartDto, scheduledCart);
 
-        for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
-            if (scheduledItemCartDto.getQuantity() < 1) throw new BusinessException("É necessário comprar ao menos 1 Item");
-            ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());
-            Integer stock = warehouseService
-                    .getWarehouseStock(p.getId())
-                    .getWarehouses()
-                    .stream()
-                    .map(w -> w.getTotalquantity())
-                    .reduce((acc, res) -> acc + res).orElse(0);
-            if (stock < scheduledItemCartDto.getQuantity()) throw new BusinessException("Produto indisponível");
-
-
-            itemCartList.add(ScheduledItemCartDto.convert(scheduledItemCartDto, p, scheduledCart));
+        for (ScheduledItemCart s : itemCartList) {
+            Integer remaining = s.getQuantity();
+            List<WarehouseStockDto> warehouseStockList = warehouseService.getWarehouseStock(s.getProductAnnouncement().getId()).getWarehouses();
+            for (WarehouseStockDto w : warehouseStockList) {
+                Integer currentStock = w.getTotalquantity();
+                if (remaining < currentStock) {
+                    batchService.decrementBatch(remaining, w.getBatch());
+                    break;
+                }
+                if (remaining >= currentStock) {
+                    batchService.decrementBatch(currentStock, w.getBatch());
+                    remaining = remaining - currentStock;
+                    if (remaining == 0) break;
+                }
+            }
         }
+
         scheduledCart.setScheduledItemCarts(itemCartList);
         scheduledCartRepository.save(scheduledCart);
         scheduledCartDto.setId(scheduledCart.getId());
@@ -113,21 +119,7 @@ public class ScheduledCartService {
             }
         }
 
-        scheduledCart.setBuyer(buyerService.getBuyer(scheduledCartDto.getBuyerId()));
         scheduledCart.setDate(scheduledCart.getDate());
-
-        List<ScheduledItemCart> itemCarts = new ArrayList<>();
-
-        for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
-            if (scheduledItemCartDto.getQuantity() < 1) throw new BusinessException("É necessário comprar ao menos 1 Item");
-            ScheduledItemCart scheduledItemCart = scheduledItemCartService.getPurchaseProduct(scheduledItemCartDto.getId());
-            scheduledItemCart.setQuantity(scheduledItemCartDto.getQuantity());
-            ProductAnnouncement productAnnouncement = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());
-            scheduledItemCart.setProductAnnouncement(productAnnouncement);
-            scheduledItemCart.setScheduledCart(scheduledCart);
-            itemCarts.add(scheduledItemCart);
-        }
-        scheduledCart.setScheduledItemCarts(itemCarts);
         scheduledCartRepository.save(scheduledCart);
         scheduledCartDto.setTotalPrice(getTotalPrice(scheduledCart.getScheduledItemCarts()));
         ScheduledCartDto cartResponse = ScheduledCartDto.convert(scheduledCart);
@@ -136,7 +128,6 @@ public class ScheduledCartService {
     }
 
     private BigDecimal getTotalPrice(List<ScheduledItemCart> scheduledItemCarts) {
-
         BigDecimal value = new BigDecimal(0);
         for (ScheduledItemCart scheduledItemCart : scheduledItemCarts) {
             ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(scheduledItemCart.getProductAnnouncement().getId());
@@ -148,6 +139,24 @@ public class ScheduledCartService {
 
     private Boolean isScheduleNotNull(ScheduledCartDto s) {
         return (s.getScheduledDateTimeFrom() != null && s.getScheduledDateTimeTo() != null);
+    }
+
+    private List<ScheduledItemCart> checkAvailableStock(ScheduledCartDto scheduledCartDto, ScheduledCart scheduledCart) {
+        List<ScheduledItemCart> itemCartList = new ArrayList<>();
+        for (ScheduledItemCartDto scheduledItemCartDto : scheduledCartDto.getProducts()) {
+            if (scheduledItemCartDto.getQuantity() < 1)
+                throw new BusinessException("É necessário comprar ao menos 1 Item");
+            ProductAnnouncement p = productAnnouncementService.getProductAnnouncement(scheduledItemCartDto.getProductAnnouncementId());
+            Integer stock = warehouseService
+                    .getWarehouseStock(p.getId())
+                    .getWarehouses()
+                    .stream()
+                    .map(w -> w.getTotalquantity())
+                    .reduce((acc, res) -> acc + res).orElse(0);
+            if (stock < scheduledItemCartDto.getQuantity()) throw new BusinessException("Produto indisponível");
+            itemCartList.add(ScheduledItemCartDto.convert(scheduledItemCartDto, p, scheduledCart));
+        }
+        return itemCartList;
     }
 
     private void checkSchedule(LocalDateTime from, LocalDateTime to) {

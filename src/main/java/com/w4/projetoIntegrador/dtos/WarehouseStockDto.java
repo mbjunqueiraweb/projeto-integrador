@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class WarehouseStockDto {
     private Long warehosecode;
     private Integer totalquantity;
+    private Long section;
+    private Long batch;
 }
