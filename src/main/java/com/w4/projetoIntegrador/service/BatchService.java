@@ -1,7 +1,10 @@
 package com.w4.projetoIntegrador.service;
 
+import java.util.Optional;
+
 import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.entities.Batch;
+import com.w4.projetoIntegrador.entities.ProductAnnouncement;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
 
@@ -27,6 +30,16 @@ public class BatchService {
     public Batch getBatch(Long id) {
 
            return batchRepository.findById(id).orElse(null);
+    }
+
+    public String getStockLimit(Long id) {
+        Batch batch = batchRepository.findById(id).orElse(null);
+        if(batch.getStock() < 5) {
+            return "O produto " + batch.getProductId() + "esta com stock baixo";
+
+        } else {
+            return "Stock do produto ok";
+        }
     }
 
 }

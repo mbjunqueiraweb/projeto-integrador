@@ -1,6 +1,7 @@
 package com.w4.projetoIntegrador.controller;
 
 import com.w4.projetoIntegrador.dtos.BatchDto;
+import com.w4.projetoIntegrador.entities.Batch;
 import com.w4.projetoIntegrador.service.BatchService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,10 @@ public class BatchController {
 
         return ResponseEntity.ok().body(batchService.get(id));
     }
-
+    
+    @GetMapping("/stock/{id}")
+    public ResponseEntity<String> getProductStock(@PathVariable Long id){
+        String b = batchService.getStockLimit(id);
+        return ResponseEntity.ok().body(b);
+    }
 }
