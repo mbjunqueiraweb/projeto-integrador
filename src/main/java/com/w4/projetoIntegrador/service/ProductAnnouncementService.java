@@ -26,8 +26,9 @@ public class ProductAnnouncementService {
     public ProductAnnouncement getProductAnnouncement(Long id) {
         try {
             ProductAnnouncement productAnnouncement = productAnnouncementRepository.findById(id).orElse(null);
-            productAnnouncement.setProductId(productAnnouncement.getProduct().getId());
-            productAnnouncement.setSellerId(productAnnouncement.getSeller().getId());
+            productAnnouncement.setProduct(productAnnouncement.getProduct());
+            productAnnouncement.setSeller(productAnnouncement.getSeller());
+
             return productAnnouncement;
         } catch (RuntimeException e) {
             throw new NotFoundException("ProductAnnouncementDto  " + id + " não encontrada na base de dados.");
@@ -41,13 +42,9 @@ public class ProductAnnouncementService {
     public ProductAnnouncementDto save(ProductAnnouncementDto productAnnouncementDto) {
         Product p = productService.getProduct(productAnnouncementDto.getProductId());
         Seller seller = sellerService.getSeller(productAnnouncementDto.getSellerId());
-        ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto,seller,p);
-
-        //Todo implementar sevice de seller para validar
-
+        ProductAnnouncement productAnnouncement = ProductAnnouncementDto.convert(productAnnouncementDto, seller, p);
         productAnnouncementRepository.save(productAnnouncement);
 
         return productAnnouncementDto;
     }
-
 }

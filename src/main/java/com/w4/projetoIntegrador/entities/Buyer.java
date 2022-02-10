@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +17,6 @@ public class Buyer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Null
     private Long id;
 
     private String name;

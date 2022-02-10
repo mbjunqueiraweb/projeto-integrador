@@ -48,14 +48,5 @@ public class ProductAnnouncement {
     private Product product;
 
     @ManyToOne
-    @JsonIgnore
     private Seller seller;
-
-    @Transient
-    @NotNull
-    private Long productId;
-
-    @Transient
-    @NotNull
-    private Long sellerId;
 }

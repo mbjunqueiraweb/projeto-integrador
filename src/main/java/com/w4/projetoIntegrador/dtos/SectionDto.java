@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -25,7 +24,6 @@ public class SectionDto {
     @NotNull
     private float totalSpace;
 
-    @Transient
     @NotNull
     private Long warehouseId;
 

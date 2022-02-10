@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,7 +26,10 @@ public class BatchDto {
     private Long id;
 
     @NotNull
+    @Min(value = 5)
     private Integer initialQuantity;
+
+    private Integer stock;
 
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -60,6 +64,7 @@ public class BatchDto {
                 .initialQuantity(batch.getInitialQuantity())
                 .manufacturingDateTime(batch.getManufacturingDateTime())
                 .dueDate(batch.getDueDate())
+                .stock(batch.getStock())
                 .currentTemperature(batch.getCurrentTemperature())
                 .productId(batch.getProductAnnouncement().getId())
                 .build();

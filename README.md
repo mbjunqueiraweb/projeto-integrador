@@ -34,11 +34,7 @@ Implemented
 
 Modelo de SQL
 
-//drop database if exists integrator_project;
-
-//create database integrator_project;
-
-//use integrator_project;
+```
 
 ##User.java
 INSERT INTO users (username, password, enabled, profile_type) values ("Matheus", "AJDUJ*&@!", true, "AGENT");
@@ -77,4 +73,5 @@ INSERT INTO batches (current_temperature, due_date, initial_quantity, manufactur
 values (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 1, 20, 1, 1), (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 1, 20, 2, 3);
 
 ###Grupo 11
-## Mauro, Iberê, Lucas, Matheus e Stephanie
+## Mauro, Iberê, Lucas, Matheus e Stephanie`
+``` 

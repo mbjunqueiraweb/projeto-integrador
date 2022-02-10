@@ -1,7 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -25,16 +24,12 @@ public class Cart {
 
     private LocalDate date;
 
-    @Transient
-    private Long buyerId;
-
     private String statusCode;
+
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ItemCart> itemCarts;
 
     @ManyToOne
-    @JsonIgnore
     private Buyer buyer;
-
 }

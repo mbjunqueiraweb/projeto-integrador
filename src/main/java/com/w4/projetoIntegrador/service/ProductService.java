@@ -1,8 +1,9 @@
 package com.w4.projetoIntegrador.service;
 
+import com.w4.projetoIntegrador.dtos.BatchDto;
 import com.w4.projetoIntegrador.dtos.ProductLocationDto;
+import com.w4.projetoIntegrador.dtos.SectionDto;
 import com.w4.projetoIntegrador.entities.Batch;
-import com.w4.projetoIntegrador.entities.Inbound;
 import com.w4.projetoIntegrador.dtos.ProductDto;
 
 import com.w4.projetoIntegrador.entities.Product;
@@ -11,10 +12,8 @@ import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.BusinessException;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.BatchRepository;
-import com.w4.projetoIntegrador.repository.InboundRepository;
 import com.w4.projetoIntegrador.repository.ProductAnnouncementRepository;
 import com.w4.projetoIntegrador.repository.ProductRepository;
-import com.w4.projetoIntegrador.repository.SectionRepository;
 
 import org.springframework.stereotype.Service;
 
@@ -29,19 +28,19 @@ public class ProductService {
     ProductRepository productRepository;
     ProductAnnouncementRepository productAnnouncementRepository;
     BatchRepository batchRepository;
-    InboundRepository inboundRepository;
-    SectionRepository sectionRepository;
+    BatchService batchService;
+    SectionService sectionService;
 
     public ProductService(ProductRepository productRepository,
-            ProductAnnouncementRepository productAnnouncementRepository,
-            BatchRepository batchRepository,
-            InboundRepository inboundRepository,
-            SectionRepository sectionRepository){
+                          ProductAnnouncementRepository productAnnouncementRepository,
+                          BatchRepository batchRepository,
+                          BatchService batchService,
+                          SectionService sectionService) {
         this.productRepository = productRepository;
         this.productAnnouncementRepository = productAnnouncementRepository;
         this.batchRepository = batchRepository;
-        this.inboundRepository = inboundRepository;
-        this.sectionRepository = sectionRepository;
+        this.batchService = batchService;
+        this.sectionService = sectionService;
     }
 
     public Product getProduct(Long id) {
@@ -111,48 +110,65 @@ public class ProductService {
         return productListByCategory;
     }
 
-    public ProductLocationDto getProductLocation(Long id) {
-        ProductAnnouncement product = productAnnouncementRepository.findById(id).orElse(null);
+    public List<ProductLocationDto> getProductLocation(Long id) {
+        try {
+            ProductAnnouncement product = productAnnouncementRepository.findById(id).orElse(null);
+            if (product.equals(null)) throw new NotFoundException("Não encontrado produto com id " + id);
+            List<Batch> batchesList = batchRepository.findByProductAnnouncement(product);
+            List<BatchDto> batchesDtoList = new ArrayList<>();
+            for (Batch b : batchesList) {
+                batchesDtoList.add(BatchDto.convert(b));
+            }
 
-        List<Batch> batchesList = batchRepository.findByProductAnnouncement(product);
-        for (Batch batch : batchesList) {
-            batch.setProductId(id);
+            List<ProductLocationDto> productLocationList = new ArrayList<>();
+
+            List<BatchRepository.SectionById> sectionById = batchRepository.getSectionsById(id);
+            for (BatchRepository.SectionById b : sectionById) {
+                SectionDto sDto = SectionDto.convert(sectionService.getSection(b.getSection()));
+                List<BatchDto> batchDtoList = new ArrayList<>();
+                List<BatchRepository.SoldStock> batchStockList = batchRepository.getStock(id, b.getSection());
+                for (BatchRepository.SoldStock batchStock : batchStockList) {
+                    Batch batch = batchService.getBatch(batchStock.getBatch());
+                    batchDtoList.add(BatchDto.convert(batch));
+                }
+
+                ProductLocationDto p = ProductLocationDto.builder().productId(id).section(sDto).batchStockDto(batchDtoList).build();
+                productLocationList.add(p);
+            }
+            return productLocationList;
+        } catch (NullPointerException e) {
+            throw new NotFoundException("Não foi encontrado produto com id " + id);
         }
-        Inbound foundedInbound = inboundRepository.getById(id);
-        ProductLocationDto productLocationDto = new ProductLocationDto();
-        productLocationDto.setBatchStock(batchesList);
-        productLocationDto.setProductId(id);
-        productLocationDto.setSection(foundedInbound.getSection());
-        productLocationDto.getSection().setWarehouseId(foundedInbound.getSection().getWarehouse().getId());
-        return productLocationDto;
     }
 
     public ProductLocationDto orderProductByCategory(Long id, Character ordenation) {
-        ProductLocationDto productLocationDto = getProductLocation(id);
+        List<ProductLocationDto> productLocationDtoList = getProductLocation(id);
+        if (productLocationDtoList.size() == 0) throw new NotFoundException("Não encontrado");
+        ProductLocationDto productLocationDto = productLocationDtoList.get(0);
 
-        List<Batch> batchList;
+        List<BatchDto> batchList;
 
         if (ordenation == null) return productLocationDto;
 
         switch (ordenation) {
             case 'L':
-                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingLong(Batch::getId)).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted(Comparator.comparingLong(BatchDto::getId)).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 
             case 'C':
-                batchList = productLocationDto.getBatchStock().stream().sorted(Comparator.comparingInt(Batch::getStock)).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted(Comparator.comparingInt(BatchDto::getStock)).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 
             case 'F':
-                batchList = productLocationDto.getBatchStock().stream().sorted((b1, b2) -> String.CASE_INSENSITIVE_ORDER.compare(b1.getDueDate().toString(), b2.getDueDate().toString())).collect(Collectors.toList());
+                batchList = productLocationDto.getBatchStockDto().stream().sorted((b1, b2) -> String.CASE_INSENSITIVE_ORDER.compare(b1.getDueDate().toString(), b2.getDueDate().toString())).collect(Collectors.toList());
 
-                productLocationDto.setBatchStock(batchList);
+                productLocationDto.setBatchStockDto(batchList);
 
                 return productLocationDto;
 

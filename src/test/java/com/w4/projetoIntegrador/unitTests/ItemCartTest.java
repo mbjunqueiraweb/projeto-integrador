@@ -1,23 +1,17 @@
 package com.w4.projetoIntegrador.unitTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import com.w4.projetoIntegrador.entities.ItemCart;
-import com.w4.projetoIntegrador.entities.Product;
-import com.w4.projetoIntegrador.entities.ProductAnnouncement;
-import com.w4.projetoIntegrador.entities.Seller;
+import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.exceptions.NotFoundException;
 import com.w4.projetoIntegrador.repository.ItemCartRepository;
 import com.w4.projetoIntegrador.service.ItemCartService;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ItemCartTest {
 
@@ -26,17 +20,17 @@ public class ItemCartTest {
 
 
     private ProductAnnouncement productAnnouncement = ProductAnnouncement.builder()
-    .id(1L)
-    .name("teste")
-    .brand("teste")
-    .price(new BigDecimal(10.0))
-    .volume(1.0f)
-    .minimumTemperature(2.0f)
-    .maximumTemperature(15.0f)
-    .product(product1)
-    .seller(seller1)
-    .build();
-   
+            .id(1L)
+            .name("teste")
+            .brand("teste")
+            .price(new BigDecimal(10.0))
+            .volume(1.0f)
+            .minimumTemperature(2.0f)
+            .maximumTemperature(15.0f)
+            .product(product1)
+            .seller(seller1)
+            .build();
+
 
     private ItemCart itemCart = ItemCart.builder().id(1L).productAnnouncement(productAnnouncement).quantity(10).build();
 
@@ -76,8 +70,8 @@ public class ItemCartTest {
 
 
         NotFoundException notFoundException = assertThrows(NotFoundException.class,
-        () -> service.getPurchaseProduct(100L));
-        
+                () -> service.getPurchaseProduct(100L));
+
         assertTrue(notFoundException.getMessage().contains("Product 100 não encontrada na base de dados."));
 
     }

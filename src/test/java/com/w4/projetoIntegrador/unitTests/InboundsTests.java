@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +37,7 @@ public class InboundsTests {
             .seller(seller1)
             .build();
 
-    private BatchDto batchDto1 = BatchDto.builder().id(1l).initialQuantity(10).build();
+    private BatchDto batchDto1 = BatchDto.builder().id(1l).initialQuantity(10).manufacturingDateTime(LocalDateTime.now()).dueDate(LocalDate.now().plusDays(30)).currentTemperature(0f).build();
     private Batch batch1 = Batch.builder().id(1L).productAnnouncement(pa1).initialQuantity(10).build();
     private Section section1 = Section.builder().id(1L).totalSpace(10000f).type(ProductTypes.congelado).build();
     private Section section2 = Section.builder().id(2L).totalSpace(10000f).type(ProductTypes.refrigerado).build();

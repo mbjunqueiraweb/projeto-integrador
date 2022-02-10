@@ -1,23 +1,24 @@
 package com.w4.projetoIntegrador.unitTests;
 
-import com.w4.projetoIntegrador.dtos.CartDto;
-import com.w4.projetoIntegrador.dtos.ItemCartDto;
+import com.w4.projetoIntegrador.dtos.*;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import com.w4.projetoIntegrador.repository.CartRepository;
+import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import com.w4.projetoIntegrador.service.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CartServiceTest {
+public class CartTest {
 
     private Product product1 = Product.builder().id(1L).name("product").productType(ProductTypes.congelado).build();
     private Seller seller1 = Seller.builder().id(1l).name("seller").build();
@@ -64,7 +65,16 @@ public class CartServiceTest {
     Cart cart2 = Cart.builder().date(LocalDate.now()).statusCode("fechado").buyer(buyer).itemCarts(itemCartsList).build();
 
     CartDto cartDto = CartDto.builder().date(LocalDate.now()).statusCode("aberto").products(itemCartsListDto).buyerId(1L).build();
-    CartDto cartDto2 = CartDto.builder().date(LocalDate.now()).statusCode("fechado").products(itemCartsListDto).buyerId(1L).build();
+
+    CartDto cartDto2 = CartDto.builder()
+            .date(LocalDate.now())
+            .statusCode("fechado")
+            .products(itemCartsListDto)
+            .buyerId(1L)
+            .build();
+
+    WarehouseStockDto wsDto = WarehouseStockDto.builder().batch(1L).section(1L).totalquantity(1000).build();
+    List<WarehouseStockDto> wLists = Arrays.asList(wsDto);
 
     @Test
     public void deveCadastrarUmCart() {
@@ -74,12 +84,21 @@ public class CartServiceTest {
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
         ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        WarehouseRepository.ProductWarehouse mockProductWarehouse = Mockito.mock(WarehouseRepository.ProductWarehouse.class);
+
+
+        Mockito.when(mockProductWarehouse.getWarehouse()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getBatch()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getSection()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getStock()).thenReturn(100);
 
         Mockito.when(mockCartRepository.save(Mockito.any())).thenReturn(cart);
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
-
-        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
+        Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
         //act
         CartDto c = cartService.create(cartDto);
@@ -96,14 +115,24 @@ public class CartServiceTest {
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
         ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        WarehouseRepository.ProductWarehouse mockProductWarehouse = Mockito.mock(WarehouseRepository.ProductWarehouse.class);
 
-        Mockito.when(mockCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(cart));
-        Mockito.when(mockCartRepository.save(Mockito.any())).thenReturn(cart2);
+
+        Mockito.when(mockProductWarehouse.getWarehouse()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getBatch()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getSection()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getStock()).thenReturn(100);
+
+        Mockito.when(mockCartRepository.save(Mockito.any())).thenReturn(cart);
+        Mockito.when(mockCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(cart2));
+
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
-        Mockito.when((mockItemCartService.getPurchaseProduct(Mockito.anyLong()))).thenReturn(itemCart);
+        Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
-        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
 
         //act
         CartDto c = cartService.updateCart(1L, cartDto2);
@@ -114,18 +143,28 @@ public class CartServiceTest {
 
     @Test
     public void deveBuscarUmCart() {
-
         //arrange
         CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
         ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
+        WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
+        BatchService mockBatchService = Mockito.mock(BatchService.class);
+        WarehouseRepository.ProductWarehouse mockProductWarehouse = Mockito.mock(WarehouseRepository.ProductWarehouse.class);
 
-        Mockito.when(mockCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(cart));
+
+        Mockito.when(mockProductWarehouse.getWarehouse()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getBatch()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getSection()).thenReturn(1L);
+        Mockito.when(mockProductWarehouse.getStock()).thenReturn(100);
+
+        Mockito.when(mockCartRepository.save(Mockito.any())).thenReturn(cart);
+        Mockito.when(mockCartRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(cart2));
+
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
-
-        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService);
+        Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
         //act
         CartDto c = cartService.get(1L);

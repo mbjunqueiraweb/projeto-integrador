@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -46,16 +45,11 @@ public class Batch {
     @NotNull
     private Float currentTemperature;
 
-    //TODO usado em product Location refatorar (????)
-    private Long productId;
-
     @ManyToOne
-    @JsonIgnore
     @NotNull
     private ProductAnnouncement productAnnouncement;
 
     @ManyToOne
-    @JsonIgnore
     @NotNull
     private Inbound inbound;
 }

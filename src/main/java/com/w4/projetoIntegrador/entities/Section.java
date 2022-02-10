@@ -1,6 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.w4.projetoIntegrador.enums.ProductTypes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 
 @Data
 @NoArgsConstructor
@@ -30,10 +28,5 @@ public class Section {
     private Float totalSpace;
 
     @ManyToOne
-    @JsonIgnore
     private Warehouse warehouse;
-
-    @Transient
-    @NotNull
-    private Long warehouseId;
 }

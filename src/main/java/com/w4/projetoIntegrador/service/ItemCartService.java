@@ -18,7 +18,7 @@ public class ItemCartService {
         try {
             ItemCart itemCart = itemCartRepository.findById(id).orElse(null);
             if (itemCart.equals(null)) throw new NotFoundException("Product " + id + " não encontrada na base de dados.");
-        return itemCart;
+            return itemCart;
         } catch (RuntimeException e) {
             throw new NotFoundException("Product " + id + " não encontrada na base de dados.");
         }
@@ -28,4 +28,3 @@ public class ItemCartService {
         return itemCartRepository.save(itemCart);
     }
 }
-

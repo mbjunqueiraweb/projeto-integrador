@@ -1,14 +1,13 @@
 package com.w4.projetoIntegrador.dtos;
 
-import com.w4.projetoIntegrador.entities.Cart;
-import com.w4.projetoIntegrador.entities.ItemCart;
-import com.w4.projetoIntegrador.entities.ProductAnnouncement;
+import com.w4.projetoIntegrador.entities.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
+
 
 @Data
 @NoArgsConstructor
@@ -24,7 +23,7 @@ public class ItemCartDto {
     @NotNull
     private Long productAnnouncementId;
 
-    public static ItemCartDto convert(ItemCart itemCart){
+    public static ItemCartDto convert(ItemCart itemCart) {
         return ItemCartDto.builder()
                 .id(itemCart.getId())
                 .quantity(itemCart.getQuantity())
@@ -32,7 +31,9 @@ public class ItemCartDto {
                 .build();
     }
 
-    public static ItemCart convert(ItemCartDto itemCartDto, ProductAnnouncement p, Cart c) {
+    public static ItemCart convert(ItemCartDto itemCartDto,
+                                   ProductAnnouncement p,
+                                   Cart c) {
         return ItemCart.builder()
                 .cart(c)
                 .productAnnouncement(p)

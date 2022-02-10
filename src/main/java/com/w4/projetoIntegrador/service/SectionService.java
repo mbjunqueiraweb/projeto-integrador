@@ -32,7 +32,6 @@ public class SectionService {
     public Section getSection(Long id) {
         try {
             Section section = sectionRepository.findById(id).orElse(null);
-            section.setWarehouseId(section.getWarehouse().getId());
             return section;
         } catch (RuntimeException e) {
             throw new NotFoundException("Section " + id + " não encontrada na base de dados.");
@@ -51,22 +50,25 @@ public class SectionService {
     }
 
     public List<ValidDueDateProductsDto> getValidDueDateProducts(Long id, Integer dias) {
-        List<SectionRepository.ValidDueDateProducts> validProducts = sectionRepository.findValidDueDateProducts(id);
-        List<ValidDueDateProductsDto> validDueDateList = new ArrayList<ValidDueDateProductsDto>();
-        for (ValidDueDateProducts validDueDateProducts : validProducts) {
-            if (LocalDate.now().plusDays(dias).isAfter(validDueDateProducts.getDueDate())) {
-                ValidDueDateProductsDto validDueDateProductsDto = ValidDueDateProductsDto.builder()
-                        .batchNumber(validDueDateProducts.getBatchNumber())
-                        .productId(validDueDateProducts.getProductId())
-                        .productTypeId(validDueDateProducts.getProductTypeId())
-                        .dueDate(validDueDateProducts.getDueDate())
-                        .quantity(validDueDateProducts.getQuantity())
-                        .build();
+           List<SectionRepository.ValidDueDateProducts> validProducts = sectionRepository.findValidDueDateProducts(id);
+           if(validProducts.size() == 0) throw  new NotFoundException("Não encontrado setor com este id");
 
-                validDueDateList.add(validDueDateProductsDto);
-            }
-        }
-        return validDueDateList;
+           System.out.println(validProducts.size());
+           List<ValidDueDateProductsDto> validDueDateList = new ArrayList<ValidDueDateProductsDto>();
+           for (ValidDueDateProducts validDueDateProducts : validProducts) {
+               if (LocalDate.now().plusDays(dias).isAfter(validDueDateProducts.getDueDate())) {
+                   ValidDueDateProductsDto validDueDateProductsDto = ValidDueDateProductsDto.builder()
+                           .batchNumber(validDueDateProducts.getBatchNumber())
+                           .productId(validDueDateProducts.getProductId())
+                           .productTypeId(validDueDateProducts.getProductTypeId())
+                           .dueDate(validDueDateProducts.getDueDate())
+                           .quantity(validDueDateProducts.getQuantity())
+                           .build();
+
+                   validDueDateList.add(validDueDateProductsDto);
+               }
+           }
+           return validDueDateList;
     }
 
     public List<ValidDueDateProductsDto> getValidDueDateProductsByCategory(String type, Integer days, String orderBy) {
