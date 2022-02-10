@@ -1,7 +1,5 @@
 package com.w4.projetoIntegrador.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,13 +24,12 @@ public class Cart {
 
     private LocalDate date;
 
-
     private String statusCode;
+
 
     @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ItemCart> itemCarts;
 
     @ManyToOne
     private Buyer buyer;
-
 }

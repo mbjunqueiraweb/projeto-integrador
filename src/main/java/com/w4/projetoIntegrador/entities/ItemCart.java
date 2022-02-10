@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "items_cart")
+@Table(name = "scheduled_items_cart")
 public class ItemCart {
 
     @Id

@@ -3,7 +3,7 @@ package com.w4.projetoIntegrador.unitTests;
 import com.w4.projetoIntegrador.dtos.*;
 import com.w4.projetoIntegrador.entities.*;
 import com.w4.projetoIntegrador.enums.ProductTypes;
-import com.w4.projetoIntegrador.repository.ScheduledCartRepository;
+import com.w4.projetoIntegrador.repository.CartRepository;
 import com.w4.projetoIntegrador.repository.WarehouseRepository;
 import com.w4.projetoIntegrador.service.*;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScheduledCartTest {
+public class CartTest {
 
     private Product product1 = Product.builder().id(1L).name("product").productType(ProductTypes.congelado).build();
     private Seller seller1 = Seller.builder().id(1l).name("seller").build();
@@ -48,31 +48,29 @@ public class ScheduledCartTest {
             .build();
 
 
-    ScheduledItemCart itemCart = ScheduledItemCart.builder().productAnnouncement(pa1).quantity(10).build();
-    ScheduledItemCart itemCart2 = ScheduledItemCart.builder().productAnnouncement(pa2).quantity(10).build();
+    ItemCart itemCart = ItemCart.builder().productAnnouncement(pa1).quantity(10).build();
+    ItemCart itemCart2 = ItemCart.builder().productAnnouncement(pa2).quantity(10).build();
 
-    List<ScheduledItemCart> itemCartsList = Arrays.asList(itemCart, itemCart2);
+    List<ItemCart> itemCartsList = Arrays.asList(itemCart, itemCart2);
 
 
-    ScheduledItemCartDto itemCartDto = ScheduledItemCartDto.builder().id(1L).productAnnouncementId(1L).quantity(10).build();
-    ScheduledItemCartDto itemCartDto2 = ScheduledItemCartDto.builder().id(1L).productAnnouncementId(2L).quantity(10).build();
+    ItemCartDto itemCartDto = ItemCartDto.builder().id(1L).productAnnouncementId(1L).quantity(10).build();
+    ItemCartDto itemCartDto2 = ItemCartDto.builder().id(1L).productAnnouncementId(2L).quantity(10).build();
 
-    List<ScheduledItemCartDto> itemCartsListDto = Arrays.asList(itemCartDto, itemCartDto2);
+    List<ItemCartDto> itemCartsListDto = Arrays.asList(itemCartDto, itemCartDto2);
 
     Buyer buyer = Buyer.builder().id(1L).name("buyer").build();
 
-    ScheduledCart cart = ScheduledCart.builder().date(LocalDate.now()).statusCode("aberto").buyer(buyer).scheduledItemCarts(itemCartsList).build();
-    ScheduledCart cart2 = ScheduledCart.builder().date(LocalDate.now()).statusCode("fechado").buyer(buyer).scheduledItemCarts(itemCartsList).build();
+    Cart cart = Cart.builder().date(LocalDate.now()).statusCode("aberto").buyer(buyer).itemCarts(itemCartsList).build();
+    Cart cart2 = Cart.builder().date(LocalDate.now()).statusCode("fechado").buyer(buyer).itemCarts(itemCartsList).build();
 
-    ScheduledCartDto cartDto = ScheduledCartDto.builder().date(LocalDate.now()).statusCode("aberto").products(itemCartsListDto).buyerId(1L).build();
+    CartDto cartDto = CartDto.builder().date(LocalDate.now()).statusCode("aberto").products(itemCartsListDto).buyerId(1L).build();
 
-    ScheduledCartDto cartDto2 = ScheduledCartDto.builder()
+    CartDto cartDto2 = CartDto.builder()
             .date(LocalDate.now())
             .statusCode("fechado")
             .products(itemCartsListDto)
             .buyerId(1L)
-            .scheduledDateTimeFrom(LocalDateTime.now().plusDays(10))
-            .scheduledDateTimeTo(LocalDateTime.now().plusDays(12))
             .build();
 
     WarehouseStockDto wsDto = WarehouseStockDto.builder().batch(1L).section(1L).totalquantity(1000).build();
@@ -82,9 +80,9 @@ public class ScheduledCartTest {
     public void deveCadastrarUmCart() {
 
         //arrange
-        ScheduledCartRepository mockCartRepository = Mockito.mock(ScheduledCartRepository.class);
+        CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
-        ScheduledItemCartService mockItemCartService = Mockito.mock(ScheduledItemCartService.class);
+        ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
         WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
         BatchService mockBatchService = Mockito.mock(BatchService.class);
@@ -100,10 +98,10 @@ public class ScheduledCartTest {
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
         Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
-        ScheduledCartService cartService = new ScheduledCartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
         //act
-        ScheduledCartDto c = cartService.create(cartDto);
+        CartDto c = cartService.create(cartDto);
 
         //assertion
         assertEquals(c.getDate(), cart.getDate());
@@ -113,9 +111,9 @@ public class ScheduledCartTest {
     public void deveAtualizarUmCart() {
 
         //arrange
-        ScheduledCartRepository mockCartRepository = Mockito.mock(ScheduledCartRepository.class);
+        CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
-        ScheduledItemCartService mockItemCartService = Mockito.mock(ScheduledItemCartService.class);
+        ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
         WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
         BatchService mockBatchService = Mockito.mock(BatchService.class);
@@ -133,11 +131,11 @@ public class ScheduledCartTest {
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
         Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
-        ScheduledCartService cartService = new ScheduledCartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
 
         //act
-        ScheduledCartDto c = cartService.updateCart(1L, cartDto2);
+        CartDto c = cartService.updateCart(1L, cartDto2);
 
         //assertion
         assertEquals(c.getDate(), cart.getDate());
@@ -146,9 +144,9 @@ public class ScheduledCartTest {
     @Test
     public void deveBuscarUmCart() {
         //arrange
-        ScheduledCartRepository mockCartRepository = Mockito.mock(ScheduledCartRepository.class);
+        CartRepository mockCartRepository = Mockito.mock(CartRepository.class);
         BuyerService mockBuyerService = Mockito.mock(BuyerService.class);
-        ScheduledItemCartService mockItemCartService = Mockito.mock(ScheduledItemCartService.class);
+        ItemCartService mockItemCartService = Mockito.mock(ItemCartService.class);
         ProductAnnouncementService mockProductAnnouncementService = Mockito.mock(ProductAnnouncementService.class);
         WarehouseService mockWarehouseService = Mockito.mock(WarehouseService.class);
         BatchService mockBatchService = Mockito.mock(BatchService.class);
@@ -166,10 +164,10 @@ public class ScheduledCartTest {
         Mockito.when(mockBuyerService.getBuyer(Mockito.anyLong())).thenReturn(buyer);
         Mockito.when(mockProductAnnouncementService.getProductAnnouncement(Mockito.anyLong())).thenReturn(pa1);
         Mockito.when(mockWarehouseService.getWarehouseStock(Mockito.anyLong())).thenReturn(ProductsByWarehouseDto.builder().warehouses(wLists).build());
-        ScheduledCartService cartService = new ScheduledCartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
+        CartService cartService = new CartService(mockCartRepository, mockBuyerService, mockItemCartService, mockProductAnnouncementService, mockWarehouseService, mockBatchService);
 
         //act
-        ScheduledCartDto c = cartService.get(1L);
+        CartDto c = cartService.get(1L);
 
         //assertion
         assertEquals(c.getDate(), cart.getDate());
