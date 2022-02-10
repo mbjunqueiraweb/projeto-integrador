@@ -19,7 +19,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF0aGV1cyIsInByb2ZpbGVUeXBlIjoiQUdFTlQiLCJpYXQiOjE2NDQzMjI5MTksImV4cCI6MTY0NDQwOTMxOX0.N7mncD0fEPKiZ-YISijmq09jou4ufSh1RaFlJjC4vpo",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF0aGV1cyIsInByb2ZpbGVUeXBlIjoiQUdFTlQiLCJpYXQiOjE2NDQ1MDc3OTMsImV4cCI6MTY0NDU5NDE5M30.sg2My3o5LCyt17tyqbVY3a578fimysVatZsgVfuhk5Y",
 											"type": "string"
 										}
 									]
@@ -28,7 +28,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"orderNumber\": 234,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"sectionId\": 2,\n    \"agentId\": 2,\n    \"batchList\": [\n        {\n            \"initialQuantity\": 52,\n            \"manufacturingDateTime\": \"2023-01-27T15:13:31.253314\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 2,\n            \"productId\": 1\n        },\n        {\n            \"initialQuantity\": 52,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 25.0,\n            \"productId\": 1\n        }\n    ]\n}",
+									"raw": "{\n    \"sectionId\": 2,\n    \"agentId\": 2,\n    \"batchList\": [\n        {\n            \"initialQuantity\": 1,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253314\",\n            \"dueDate\": \"2022-02-28\",\n            \"currentTemperature\": 5,\n            \"productId\": 1\n        },\n        {\n            \"initialQuantity\": 1,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-02-28\",\n            \"currentTemperature\": 5,\n            \"productId\": 1\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -60,7 +60,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -69,7 +69,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"orderNumber\": 1,\n    \"orderDate\": \"2022-01-27T15:13:31.253314\",\n    \"sectionId\": 1,\n    \"agentId\": 1,\n    \"batchList\": [\n        {\n            \"id\": 1,\n            \"initialQuantity\": 420,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253291\",\n            \"dueDate\": \"2022-01-27\",\n            \"currentTemperature\": 23.0,\n            \"type\": \"fresco\",\n            \"productId\": 1\n        }\n    ]\n}",
+									"raw": "{\n    \"sectionId\": 2,\n    \"agentId\": 2,\n    \"batchList\": [\n        {\n            \"id\":61,\n            \"initialQuantity\": 2,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253314\",\n            \"dueDate\": \"2022-02-27\",\n            \"currentTemperature\": 5,\n            \"productId\": 1\n        },\n        {\n            \"id\":62,\n            \"initialQuantity\": 1,\n            \"manufacturingDateTime\": \"2022-01-27T15:13:31.253306\",\n            \"dueDate\": \"2022-02-28\",\n            \"currentTemperature\": 5,\n            \"productId\": 1\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -77,7 +77,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/1",
+									"raw": "http://localhost:8080/api/v1/fresh-products/inboundorder/33",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -88,7 +88,7 @@
 										"v1",
 										"fresh-products",
 										"inboundorder",
-										"1"
+										"33"
 									]
 								}
 							},
@@ -110,7 +110,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -119,7 +119,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -154,8 +154,13 @@
 									"type": "bearer",
 									"bearer": [
 										{
+											"key": "password",
+											"value": "{{Buyer}}",
+											"type": "string"
+										},
+										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -164,7 +169,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\":\"frango\",\n    \"productType\":\"frozen\"\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -172,7 +177,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/products/list?category=refrigerado",
+									"raw": "http://localhost:8080/api/v1/fresh-products/products/list?category=fresco",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -188,7 +193,7 @@
 									"query": [
 										{
 											"key": "category",
-											"value": "refrigerado"
+											"value": "fresco"
 										}
 									]
 								}
@@ -203,7 +208,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -212,7 +217,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 2,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"productAnnouncementId\": 2,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"raw": "{\n    \"buyerId\": 3,\n    \"products\": [\n        {\n            \"productAnnouncementId\": 2,\n            \"quantity\": 0\n        }\n    ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -244,7 +249,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -253,7 +258,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n        \"id\": 2,\n        \"date\": \"2022-01-27T15:13:31.253314\",\n        \"buyerId\": 1,\n        \"statusCode\": \"aberto\",\n   \n   \"products\": [\n       {\n           \"id\":1,\n           \"productAnnouncementId\": 1,\n           \"quantity\": 2\n      \n       }\n      \n   ]\n}",
+									"raw": "{\n        \"id\": 2,\n        \"buyerId\": 1,\n        \"statusCode\": \"fechado\",\n   \n   \"products\": [\n       {\n           \"id\":1,\n           \"productAnnouncementId\": 1,\n           \"quantity\": 0\n       }\n   ]\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -261,7 +266,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/25",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -272,7 +277,7 @@
 										"v1",
 										"fresh-products",
 										"orders",
-										"1"
+										"25"
 									]
 								}
 							},
@@ -289,7 +294,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -336,7 +341,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -375,7 +380,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -418,7 +423,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -461,7 +466,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -512,7 +517,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -524,7 +529,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/warehouses/byproducts/3",
+									"raw": "http://localhost:8080/api/v1/fresh-products/warehouses/byproducts/1",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -536,7 +541,7 @@
 										"fresh-products",
 										"warehouses",
 										"byproducts",
-										"3"
+										"1"
 									]
 								}
 							},
@@ -558,7 +563,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -602,7 +607,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0MjY4OTIxLCJleHAiOjE2NDQzNTUzMjF9.Q8cQOdQQDcWdxr_aXomMLmYI_g0BBuAstWNYeeEVYOQ",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
 											"type": "string"
 										}
 									]
@@ -614,7 +619,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "http://localhost:8080/api/v1/fresh-products/sections/valid/category/congelado/days/10?orderBy=asc",
+									"raw": "http://localhost:8080/api/v1/fresh-products/sections/valid/category/congelado/days/0?orderBy=asc",
 									"protocol": "http",
 									"host": [
 										"localhost"
@@ -629,13 +634,146 @@
 										"category",
 										"congelado",
 										"days",
-										"10"
+										"0"
 									],
 									"query": [
 										{
 											"key": "orderBy",
 											"value": "asc"
 										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Requisito 6",
+					"item": [
+						{
+							"name": "CreateCart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"buyerId\": 2,\n    \"products\": [\n        {\n            \"productAnnouncementId\": 1,\n            \"quantity\": 5\n        }\n    ],\n    \"scheduledDateTimeFrom\": \"2022-02-27T15:13:31.253314\",\n    \"scheduledDateTimeTo\": \"2022-02-28T15:13:31.253314\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/scheduled-orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"scheduled-orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateCart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"buyerId\": 1,\n    \"statusCode\": \"fechado\",\n    \"scheduledDateTimeFrom\": \"2022-02-27T15:13:31.253314\",\n    \"scheduledDateTimeTo\": \"2022-02-28T15:13:31.253314\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/scheduled-orders/123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"scheduled-orders",
+										"123"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cart",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/v1/fresh-products/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"v1",
+										"fresh-products",
+										"orders",
+										"1"
 									]
 								}
 							},
@@ -711,6 +849,12 @@
 					]
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Buyer",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJUZWFtIDExIiwic3ViIjoiTWF1cm8iLCJwcm9maWxlVHlwZSI6IkJVWUVSIiwiaWF0IjoxNjQ0NDk4NzY3LCJleHAiOjE2NDQ1ODUxNjd9.A2YipJu4kn73sUAKG3oD_QQtY_zfLNg7vYmn097Xdlc"
 		}
 	]
 }
