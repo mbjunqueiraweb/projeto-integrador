@@ -136,8 +136,8 @@ public class InboundService {
     private void checkBusinessValidateBatch(BatchDto batchDto, ProductAnnouncement pa) {
         if(batchDto.getInitialQuantity() < 1)
             throw new BusinessException("O lote deve conter ao menos 1 item");
-        if (batchDto.getDueDate().isBefore(LocalDate.now().plusDays(10)))
-            throw new BusinessException("Data de validade não pode ser inferior a daqui a 10 dias");
+        if (batchDto.getDueDate().isBefore(LocalDate.now().plusDays(21)))
+            throw new BusinessException("Data de validade não pode ser inferior a daqui a 21 dias");
         if (batchDto.getManufacturingDateTime().isAfter(LocalDateTime.now()))
             throw new BusinessException("Data de fabricação não pode ser futura");
         if (batchDto.getCurrentTemperature() > pa.getMaximumTemperature())
