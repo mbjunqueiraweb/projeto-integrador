@@ -69,8 +69,8 @@ INSERT INTO inbounds (date, agent_id, section_id) values ("2022-01-27T15:13:31.2
 ("2022-01-27T15:13:31.253314", 2, 2),
 ("2022-01-27T15:13:31.253314", 3, 3);
 ##Batch.java
-INSERT INTO batches (current_temperature, due_date, initial_quantity, manufacturing_date_time, product_id, stock, inbound_id, product_announcement_id)
-values (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 1, 20, 1, 1), (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 1, 20, 2, 3);
+INSERT INTO batches (current_temperature, due_date, initial_quantity, manufacturing_date_time, stock, inbound_id, product_announcement_id)
+values (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 20, 1, 1), (7.0, "2022-01-27T15:13:31.253314", 10, "2023-01-27T15:13:31.253314", 20, 2, 3);
 
 ###Grupo 11
 ## Mauro, Iberê, Lucas, Matheus e Stephanie`
